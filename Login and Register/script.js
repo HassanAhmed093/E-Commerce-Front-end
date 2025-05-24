@@ -65,7 +65,6 @@ registerForm.addEventListener('submit', (e) => {
         return;
     }
 
-    // Store new user data
     users.push({ username, email, password });
     localStorage.setItem('users', JSON.stringify(users));
     
@@ -76,14 +75,12 @@ registerForm.addEventListener('submit', (e) => {
     }, 3000);
 });
 
-// Handle login
 loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
     
     const username = loginForm.querySelector('input[placeholder="Username"]').value;
     const password = loginForm.querySelector('input[placeholder="Password"]').value;
 
-    // Get users from localStorage
     const users = JSON.parse(localStorage.getItem('users')) || [];
 
     // Check credentials
