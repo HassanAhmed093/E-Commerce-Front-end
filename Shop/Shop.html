@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop</title>
+    <link rel="stylesheet" href="Shop.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="shop-container">
+        <aside class="filters">
+            <h3>Filters</h3>
+            
+            <div class="filter-section">
+                <h4>Categories</h4>
+                <div class="categories-list">
+                    <label><input type="checkbox" value="T-Shirts"> T-Shirts</label>
+                    <label><input type="checkbox" value="Pants"> Pants</label>
+                    <label><input type="checkbox" value="Outerwear"> Outerwear</label>
+                    <label><input type="checkbox" value="Accessories"> Accessories</label>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <h4>Price Range</h4>
+                <div class="price-range">
+                    <input type="range" id="priceRange" min="0" max="200" step="10">
+                    <div class="price-inputs">
+                        <input type="number" id="minPrice" placeholder="Min">
+                        <input type="number" id="maxPrice" placeholder="Max">
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <h4>Ratings</h4>
+                <div class="ratings-filter">
+                    <label><input type="radio" name="rating" value="4"> <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></label>
+                    <label><input type="radio" name="rating" value="3"> <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></label>
+                    <label><input type="radio" name="rating" value="2"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></label>
+                </div>
+            </div>
+        </aside>
+
+        <main class="products-grid">
+            <div class="products-header">
+                <h2>Products</h2>
+                <div class="sort-options">
+                    <select id="sortSelect">
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="rating">Rating</option>
+                    </select>
+                </div>
+            </div>
+            <div id="productsContainer" class="products-container">
+            </div>
+        </main>
+    </div>
+    <script src="Shop.js"></script>
+</body>
+</html>
