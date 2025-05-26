@@ -54,7 +54,13 @@
                     </select>
                 </div>
             </div>
-            <div id="productsContainer" class="products-container">
+            <!-- Add this right after the body tag opens -->
+            <div id="loading-overlay" class="loading-overlay">
+                <div class="loading-spinner"></div>
+            </div>
+            
+            <!-- Add class to the products container -->
+            <div id="productsContainer" class="products-container animate-grid">
             </div>
         </main>
     </div>

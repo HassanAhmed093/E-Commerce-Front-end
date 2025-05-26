@@ -1,7 +1,17 @@
 let products = [];
 let filteredProducts = [];
 
+function setLoadingState(loading) {
+    const overlay = document.getElementById('loading-overlay');
+    if (loading) {
+        overlay.style.display = 'flex';
+    } else {
+        overlay.style.display = 'none';
+    }
+}
+
 function fetchProducts() {
+    setLoadingState(true);
     const xhr = new XMLHttpRequest();
     xhr.open('GET', '../Json/products.json', true);
     
@@ -11,25 +21,30 @@ function fetchProducts() {
             filteredProducts = [...products];
             displayProducts();
             setupEventListeners();
+            setLoadingState(false);
         }
     };
     
     xhr.onerror = function() {
         console.error('Error loading products:', xhr.statusText);
+        setLoadingState(false);
     };
     
     xhr.send();
 }
 
+// Update displayProducts function
 function displayProducts() {
     const container = document.getElementById('productsContainer');
     container.innerHTML = '';
 
-    filteredProducts.forEach(product => {
+    filteredProducts.forEach((product, index) => {
         const productCard = `
-            <div class="product-card">
+            <div class="product-card" onclick="showProductDetails(${product.ID})" style="animation-delay: ${index * 0.1}s">
                 <div class="product-image">
-                    <img src="../assets/Img/Default.Webp" alt="${product.Name}">
+                    <img src="../assets/Img/"+${product.Image} alt="${product.Name}"
+                         onload="this.style.opacity='1'"
+                         style="opacity: 0; transition: opacity 0.5s;">
                 </div>
                 <div class="product-info">
                     <h3 class="product-title">${product.Name}</h3>
@@ -56,6 +71,14 @@ function displayProducts() {
         `;
         container.innerHTML += productCard;
     });
+}
+
+function showProductDetails(productId) {
+    const product = products.find(p => p.ID === productId);
+    if (product) {
+        localStorage.setItem('selectedProduct', JSON.stringify(product));
+        window.location.href = 'productDetails.html';
+    }
 }
 
 function getStarRating(rating) {
@@ -123,8 +146,16 @@ function applyFilters() {
 }
 
 function addToCart(productId) {
-    console.log(`Product ${productId} added to cart`);
-    alert('Product added to cart!');
+    const button = event.currentTarget;
+    button.innerHTML = '<i class="fas fa-check"></i> Added!';
+    button.style.background = '#4CAF50';
+    button.style.transform = 'scale(1.05)';
+    
+    setTimeout(() => {
+        button.innerHTML = '<i class="fas fa-shopping-cart"></i> Add to Cart';
+        button.style.background = '#000';
+        button.style.transform = 'scale(1)';
+    }, 2000);
 }
 
 fetchProducts();

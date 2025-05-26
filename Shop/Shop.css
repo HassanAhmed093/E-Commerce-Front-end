@@ -69,16 +69,92 @@ body {
     gap: 25px;
 }
 
-.product-card {
-    background: white;
-    border-radius: 12px;
-    padding: 15px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    transition: all 0.3s ease;
-    height: 450px;
-    display: flex;
-    flex-direction: column;
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
+
+@keyframes slideIn {
+    from { transform: translateX(-20px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@keyframes shimmer {
+    0% { background-position: -1000px 0; }
+    100% { background-position: 1000px 0; }
+}
+
+.product-card {
+    animation: fadeIn 0.6s ease-out;
+    animation-fill-mode: both;
+}
+
+.product-image img {
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-card:hover .product-image img {
+    transform: scale(1.08);
+}
+
+.add-to-cart {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.add-to-cart:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.add-to-cart:active {
+    transform: translateY(0);
+}
+
+.filters {
+    animation: slideIn 0.5s ease-out;
+}
+
+.sale-badge {
+    background: #ff4444;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    animation: pulse 1.5s infinite;
+}
+
+/* Loading animation */
+.loading-shimmer {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite linear;
+}
+
+.sort-options select:hover,
+.price-inputs input:hover,
+input[type="range"]:hover {
+    border-color: #000;
+    transition: all 0.3s ease;
+}
+
+.categories-list label:hover {
+    transform: translateX(5px);
+    transition: transform 0.3s ease;
+}
+
+.product-rating i {
+    transition: transform 0.2s ease;
+}
+
+
 
 .product-image {
     height: 250px;
