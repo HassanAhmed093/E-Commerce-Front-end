@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <link rel="stylesheet" href="productDetails.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <button class="back-button" onclick="history.back()">
+            <i class="fas fa-arrow-left"></i> Back to Shop
+        </button>
+        
+        <div class="product-details">
+            <div class="product-images">
+                <div class="main-image">
+                    <img id="mainImage" src="" alt="Product Image">
+                </div>
+            </div>
+            
+            <div class="product-info">
+                <h1 id="productName"></h1>
+                <div class="rating">
+                    <div id="productRating"></div>
+                    <span id="ratingNumber"></span>
+                </div>
+                <p id="productDetails" class="description"></p>
+                
+                <div class="price-section">
+                    <div class="price" id="priceDisplay"></div>
+                    <div class="stock" id="stockInfo"></div>
+                </div>
+                
+                <div class="purchase-section">
+                    <div class="quantity">
+                        <button onclick="updateQuantity(-1)">-</button>
+                        <input type="number" id="quantity" value="1" min="1">
+                        <button onclick="updateQuantity(1)">+</button>
+                    </div>
+                    <button class="add-to-cart" onclick="addToCartFromDetails()">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="productDetails.js"></script>
+</body>
+</html>
