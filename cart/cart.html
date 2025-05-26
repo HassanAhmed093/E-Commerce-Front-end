@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopCo - Cart</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+   
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <h1>ShopCo</h1>
+            </div>
+            <div class="nav-icons">
+                <a href="#"><i class="fas fa-search"></i></a>
+                <a href="#"><i class="fas fa-shopping-cart"></i></a>
+            </div>
+        </nav>
+    </header>
+
+   
+    <section class="cart-section">
+        <h2>Your Cart</h2>
+        <div class="cart-items" id="cartItems">
+           
+        </div>
+        
+        <div class="order-summary">
+            <h3>Order Summary</h3>
+            <div class="summary-item">
+                <span>Subtotal</span>
+                <span id="subtotal">$0.00</span>
+            </div>
+            <div class="summary-item">
+                <span>Discount (10%)</span>
+                <span class="discount" id="discount">$0.00</span>
+            </div>
+            <div class="summary-item">
+                <span>Delivery Fee</span>
+                <span>$15</span>
+            </div>
+            <div class="summary-item total">
+                <span>Total</span>
+                <span id="total">$0.00</span>
+            </div>
+            <button class="checkout-btn">Proceed to Checkout</button>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
