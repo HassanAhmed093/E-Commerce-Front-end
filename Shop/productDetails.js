@@ -49,9 +49,51 @@ function updateQuantity(change) {
 }
 
 function addToCartFromDetails() {
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    if (!loggedInUser) {
+        alert('Please log in to add items to your cart.');
+        window.location.href = 'LoginandRegister.html';
+        return;
+    }
+
     const quantity = parseInt(document.getElementById('quantity').value);
     const product = JSON.parse(localStorage.getItem('selectedProduct'));
     
+    if (quantity <= 0) {
+        alert('Please select a valid quantity.');
+        return;
+    }
+
+    if (quantity > product.UnitsInStock) {
+        alert(`Cannot add ${quantity} items; only ${product.UnitsInStock} units in stock.`);
+        return;
+    }
+
+    // Get the user's cart from localStorage
+    let userCarts = JSON.parse(localStorage.getItem('userCarts')) || {};
+    if (!userCarts[loggedInUser]) {
+        userCarts[loggedInUser] = [];
+    }
+
+    // Check if product is already in cart
+    const existingItem = userCarts[loggedInUser].find(item => item.ID === product.ID);
+    if (existingItem) {
+        // Update quantity if within stock limit
+        if (existingItem.quantity + quantity <= product.UnitsInStock) {
+            existingItem.quantity += quantity;
+        } else {
+            alert('Cannot add more items; stock limit reached.');
+            return;
+        }
+    } else {
+        // Add new item
+        userCarts[loggedInUser].push({ ...product, quantity });
+    }
+
+    // Save updated cart
+    localStorage.setItem('userCarts', JSON.stringify(userCarts));
+
+    // Update button UI
     const button = document.querySelector('.add-to-cart');
     button.innerHTML = '<i class="fas fa-check"></i> Added to Cart!';
     button.style.background = '#4CAF50';

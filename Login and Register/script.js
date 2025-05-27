@@ -83,10 +83,11 @@ loginForm.addEventListener('submit', (e) => {
 
     const users = JSON.parse(localStorage.getItem('users')) || [];
 
-    // Check credentials
     const user = users.find(user => user.username === username && user.password === password);
     
     if (user) {
+        // Store the logged-in user's username
+        localStorage.setItem('loggedInUser', username);
         showMessage(loginForm, 'Login successful! Welcome ' + username, 'success');
         loginForm.reset();
     } else {
