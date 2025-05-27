@@ -146,6 +146,46 @@ function applyFilters() {
 }
 
 function addToCart(productId) {
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    if (!loggedInUser) {
+        alert('Please log in to add items to your cart.');
+        window.location.href = 'LoginandRegister.html';
+        return;
+    }
+
+    const product = products.find(p => p.ID === productId);
+    if (!product) return;
+
+    // Get the user's cart from localStorage
+    let userCarts = JSON.parse(localStorage.getItem('userCarts')) || {};
+    if (!userCarts[loggedInUser]) {
+        userCarts[loggedInUser] = [];
+    }
+
+    // Check if product is already in cart
+    const existingItem = userCarts[loggedInUser].find(item => item.ID === productId);
+    if (existingItem) {
+        // Validate stock
+        if (existingItem.quantity + 1 <= product.UnitsInStock) {
+            existingItem.quantity += 1;
+        } else {
+            alert('Cannot add more items; stock limit reached.');
+            return;
+        }
+    } else {
+        // Add new item with quantity 1
+        if (product.UnitsInStock > 0) {
+            userCarts[loggedInUser].push({ ...product, quantity: 1 });
+        } else {
+            alert('This product is out of stock.');
+            return;
+        }
+    }
+
+    // Save updated cart
+    localStorage.setItem('userCarts', JSON.stringify(userCarts));
+
+    // Update button UI
     const button = event.currentTarget;
     button.innerHTML = '<i class="fas fa-check"></i> Added!';
     button.style.background = '#4CAF50';

@@ -7,23 +7,31 @@ const totalDisplay = document.getElementById('total');
 // Array to store cart items (with quantities)
 let cartItems = [];
 
-// Function to fetch JSON data and initialize the cart
+// Function to load cart items for the logged-in user
 function loadCartItems() {
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    if (!loggedInUser) {
+        cartItemsContainer.innerHTML = '<p>Please log in to view your cart.</p>';
+        return;
+    }
+
     // Fetch data from the local products.json file
-    fetch('../Json/products.json') // Relative path from cart folder
+    fetch('../Json/products.json')
         .then(response => {
             if (!response.ok) throw new Error('Network response was not ok ' + response.status);
-            return response.json(); // Parse JSON
+            return response.json();
         })
         .then(products => {
-            // Simulate cart with selected products (e.g., IDs 3, 12, 10)
-            const selectedProductIds = [3, 12, 10]; // Slim Fit Jeans, Plaid Flannel Shirt, Classic White T-Shirt
-            cartItems = selectedProductIds.map(id => {
-                const product = products.find(p => p.ID === id);
-                return product ? { ...product, quantity: 1 } : null;
-            }).filter(item => item !== null); // Filter out null if product not found
+            // Get the user's cart from localStorage
+            const userCarts = JSON.parse(localStorage.getItem('userCarts')) || {};
+            cartItems = userCarts[loggedInUser] || [];
 
-            // Check if cartItems is populated
+            // Validate cart items against products.json
+            cartItems = cartItems.map(item => {
+                const product = products.find(p => p.ID === item.ID);
+                return product ? { ...product, quantity: item.quantity } : null;
+            }).filter(item => item !== null);
+
             if (cartItems.length === 0) {
                 cartItemsContainer.innerHTML = '<p>No items in cart.</p>';
                 return;
@@ -33,16 +41,17 @@ function loadCartItems() {
             displayCartItems();
             // Update total
             updateTotal();
-        
-       })};
-
+        })
+        .catch(error => {
+            console.error('Error loading cart:', error);
+            cartItemsContainer.innerHTML = '<p>Error loading cart. Please try again.</p>';
+        });
+}
 
 // Function to display cart items in the DOM
 function displayCartItems() {
-    // Clear current items
     cartItemsContainer.innerHTML = '';
 
-    // Loop through cart items and create HTML for each
     cartItems.forEach((item, index) => {
         const cartItem = document.createElement('div');
         cartItem.classList.add('cart-item');
@@ -65,25 +74,43 @@ function displayCartItems() {
         cartItem.querySelector('.decrease').addEventListener('click', () => {
             if (item.quantity > 1) {
                 item.quantity--;
+                updateUserCart();
                 cartItem.querySelector('.quantity').textContent = item.quantity;
                 updateTotal();
             }
         });
 
         cartItem.querySelector('.increase').addEventListener('click', () => {
-            item.quantity++;
-            cartItem.querySelector('.quantity').textContent = item.quantity;
-            updateTotal();
+            // Validate stock
+            if (item.quantity + 1 <= item.UnitsInStock) {
+                item.quantity++;
+                updateUserCart();
+                cartItem.querySelector('.quantity').textContent = item.quantity;
+                updateTotal();
+            } else {
+                alert('Cannot add more items; stock limit reached.');
+            }
         });
 
         cartItem.querySelector('.remove-item').addEventListener('click', () => {
-            cartItems.splice(index, 1); // Remove item from array
-            displayCartItems(); // Re-render items
+            cartItems.splice(index, 1);
+            updateUserCart();
+            displayCartItems();
             updateTotal();
         });
 
         cartItemsContainer.appendChild(cartItem);
     });
+}
+
+// Function to update the user's cart in localStorage
+function updateUserCart() {
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    if (loggedInUser) {
+        let userCarts = JSON.parse(localStorage.getItem('userCarts')) || {};
+        userCarts[loggedInUser] = cartItems;
+        localStorage.setItem('userCarts', JSON.stringify(userCarts));
+    }
 }
 
 // Function to update cart total
@@ -96,7 +123,6 @@ function updateTotal() {
     const deliveryFee = 15; // $15 delivery fee
     const total = subtotal - discount + deliveryFee;
 
-    // Update DOM with formatted values
     subtotalDisplay.textContent = `$${subtotal.toFixed(2)}`;
     discountDisplay.textContent = `-$${discount.toFixed(2)}`;
     totalDisplay.textContent = `$${total.toFixed(2)}`;
