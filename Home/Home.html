@@ -1,47 +1,4 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="./styles.css">
-    <title>Document</title>
-</head>
-<body> 
-
-</header>
-    <div>
-         <div class="sign-up">
-            <span>Sign up and get 20% off to your first order .<a href="#">Sign Up Now</a></span>
-            <span><i class="fa-solid fa-xmark"></i></span>
-         </div>
-    </div>
-   
-        <nav>
-        <div>
-            <span>SHOP.CO</span>
-            <span>Shop</span>
-            <span>On Sales</span>
-            <span>New Arrivalis</span>
-            <span>Brands</span>
-        </div>
-             <div>
-                 <i class="fa fa-search search-icon"></i>
-               <input type="text" placeholder="Search..." />
-
-             </div>
-             <div>
-                <i class="fa-regular fa-circle-user"></i>
-</div>
-<div>
-    <i class="fa-solid fa-cart-shopping"></i>
-     </div>  
-        </nav>
-    </header>
-
-</body>
-</html> -->
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -56,7 +13,7 @@
     <title>Shop.CO - Fashion Deals</title>
 </head>
 <body>
-
+ 
     <header>
         <div class="sign-up">
             <span>Sign up and get 20% off your first order. <a href="#">Sign Up Now</a></span>
@@ -78,8 +35,8 @@
                 <input type="text" placeholder="Search for products..." />
             </div>
             <div class="user-actions">
+               <i class="fa-solid fa-cart-shopping"></i>
                 <i class="fa-regular fa-circle-user"></i>
-                <i class="fa-solid fa-cart-shopping"></i>
             </div>
         </nav>
     </header>
@@ -112,8 +69,7 @@
   </div>
 
   <div class="hero-image">
-    <!-- <img  src="./coverr.jpg" alt="Models in Fashion" /> -->
-  </div>
+   </div>
 </section>
   
  
@@ -125,12 +81,32 @@
   <span>Calvin Klein</span>
 </section> 
 
-
-
-
-
-<!-- footer section :  -->
+<section class="new-arrivals">
+  <h1 class="new-arrivals-text">NEW ARRIVALS</h1>
+   
+    <div class="cards-container">
+      <ul class="card-list" id="card-list"></ul>
+            
+            <div class="slider-controls">
+                <button class="slider-button" id="prev-button" disabled>←</button>
+                <button class="slider-button" id="next-button">→</button>
+            </div>
+            <div class="error-message" id="error-message" style="display: none;"></div>
+        </div>
+    </section>
  
+ 
+  </div> 
+</section>
+
+
+
+
+
+
+
+
+  
  
   <footer class="footer">
     <div class="footer-content">
@@ -198,7 +174,8 @@
         <img src="https://img.icons8.com/color/48/google-pay.png"/>
       </div>
     </div>
+
   </footer>
- 
+ <script src="./Home.js"></script>
 </body>
 </html>
