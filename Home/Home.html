@@ -1,103 +1,107 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@1&display=swap" rel="stylesheet">
-<link href="https://api.fontshare.com/v2/css?f[]=satoshi@1&display=swap" rel="stylesheet">
-  
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@1&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@1&display=swap" rel="stylesheet">
 
 
-    <link rel="stylesheet" href="./Home.css" />
-    <title>Shop.CO - Fashion Deals</title>
+
+  <link rel="stylesheet" href="./Home.css" />
+  <title>Shop.CO - Fashion Deals</title>
 </head>
+
 <body>
- 
-    <header>
-        <div class="sign-up">
-            <span>Sign up and get 20% off your first order. <a href="#">Sign Up Now</a></span>
-            <span><i class="fa-solid fa-xmark"></i></span>
+
+  <header>
+    <div class="sign-up">
+      <span>Sign up and get 20% off your first order. <a href="../Login and Register/LoginandRegister.html">Sign Up
+          Now</a></span>
+      <span><i class="fa-solid fa-xmark"></i></span>
+    </div>
+
+    <nav class="main-nav">
+      <div class="logo">
+        <span>SHOP.CO</span>
+      </div>
+      <div class="nav-links">
+        <span>Shop</span>
+        <span>On Sale</span>
+        <span>New Arrivals</span>
+        <span>Brands</span>
+      </div>
+      <div class="search-bar">
+        <i class="fa fa-search search-icon"></i>
+        <input type="text" placeholder="Search for products..." />
+      </div>
+      <div class="user-actions">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <a href="">
+          <i class="fa-regular fa-circle-user"></i>
+        </a>
+    </nav>
+  </header>
+
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1>FIND CLOTHES<br>THAT MATCHES<br>YOUR STYLE</h1>
+      <p class="Browse">
+        Browse through our diverse range of meticulously crafted garments, designed<br>
+        to bring out your individuality and cater to your sense of style.
+      </p>
+      <button class="shop-now">Shop Now</button>
+
+      <div class="hero-stats">
+        <div>
+          <h2>200+</h2>
+          <p>International Brands</p>
         </div>
-
-        <nav class="main-nav">
-            <div class="logo">
-                <span>SHOP.CO</span>
-            </div>
-            <div class="nav-links">
-                <span>Shop</span>
-                <span>On Sale</span>
-                  <span>New Arrivals</span>
-                  <span>Brands</span>          
-            </div>    
-            <div class="search-bar">
-                <i class="fa fa-search search-icon"></i>
-                <input type="text" placeholder="Search for products..." />
-            </div>
-            <div class="user-actions">
-               <i class="fa-solid fa-cart-shopping"></i>
-                <i class="fa-regular fa-circle-user"></i>
-            </div>
-        </nav>
-    </header>
-    
-    <section class="hero-section">
-  <div class="hero-content">
-    <h1>FIND CLOTHES<br>THAT MATCHES<br>YOUR STYLE</h1>
-    <p class="Browse">
-      Browse through our diverse range of meticulously crafted garments, designed<br>
-      to bring out your individuality and cater to your sense of style.
-    </p>
-    <button class="shop-now">Shop Now</button>
-
-    <div class="hero-stats">
-      <div>
-        <h2>200+</h2>
-        <p>International Brands</p>
-      </div>
-      <div class="divider"></div>
-      <div>
-        <h2>2,000+</h2>
-        <p>High-Quality Products</p>
-      </div>
-      <div class="divider"></div>
-      <div>
-        <h2>30,000+</h2>
-        <p>Happy Customers</p>
+        <div class="divider"></div>
+        <div>
+          <h2>2,000+</h2>
+          <p>High-Quality Products</p>
+        </div>
+        <div class="divider"></div>
+        <div>
+          <h2>30,000+</h2>
+          <p>Happy Customers</p>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="hero-image">
-   </div>
-</section>
-  
- 
-<section class="brands-section">
-  <span>VERSACE</span>
-  <span>ZARA</span>
-  <span>GUCCI</span>
-  <span>PRADA</span>
-  <span>Calvin Klein</span>
-</section> 
+    <div class="hero-image">
+    </div>
+  </section>
 
-<section class="new-arrivals">
-  <h1 class="new-arrivals-text">NEW ARRIVALS</h1>
-   
+
+  <section class="brands-section">
+    <span>VERSACE</span>
+    <span>ZARA</span>
+    <span>GUCCI</span>
+    <span>PRADA</span>
+    <span>Calvin Klein</span>
+  </section>
+
+  <section class="new-arrivals">
+    <h1 class="new-arrivals-text">NEW ARRIVALS</h1>
+
     <div class="cards-container">
       <ul class="card-list" id="card-list"></ul>
-            
-            <div class="slider-controls">
-                <button class="slider-button" id="prev-button" disabled>←</button>
-                <button class="slider-button" id="next-button">→</button>
-            </div>
-            <div class="error-message" id="error-message" style="display: none;"></div>
-        </div>
-    </section>
- 
- 
-  </div> 
-</section>
+
+      <div class="slider-controls">
+        <button class="slider-button" id="prev-button" disabled>←</button>
+        <button class="slider-button" id="next-button">→</button>
+      </div>
+      <div class="error-message" id="error-message" style="display: none;"></div>
+    </div>
+  </section>
+
+
+  </div>
+  </section>
 
 
 
@@ -106,8 +110,8 @@
 
 
 
-  
- 
+
+
   <footer class="footer">
     <div class="footer-content">
       <div class="footer-brand">
@@ -167,15 +171,16 @@
     <div class="footer-bottom">
       <p>Shop.co © 2000–2023, All Rights Reserved</p>
       <div class="payment-icons">
-        <img src="https://img.icons8.com/color/48/visa.png"/>
-        <img src="https://img.icons8.com/color/48/mastercard-logo.png"/>
-        <img src="https://img.icons8.com/color/48/paypal.png"/>
-        <img src="https://img.icons8.com/color/48/apple-pay.png"/>
-        <img src="https://img.icons8.com/color/48/google-pay.png"/>
+        <img src="https://img.icons8.com/color/48/visa.png" />
+        <img src="https://img.icons8.com/color/48/mastercard-logo.png" />
+        <img src="https://img.icons8.com/color/48/paypal.png" />
+        <img src="https://img.icons8.com/color/48/apple-pay.png" />
+        <img src="https://img.icons8.com/color/48/google-pay.png" />
       </div>
     </div>
 
   </footer>
- <script src="./Home.js"></script>
+  <script src="./Home.js"></script>
 </body>
+
 </html>
