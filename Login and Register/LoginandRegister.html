@@ -9,6 +9,14 @@
     </head>
     
     <body>
+        <script>
+            // Check if user is already logged in
+            const loggedInUser = localStorage.getItem('loggedInUser');
+            if (loggedInUser) {
+                window.location.href = '../Home/Home.html';
+            }
+        </script>
+        
         <div class="container">
             <div class="form-box login">
                 <form action="">

@@ -1,6 +1,4 @@
- 
-    
-        function fetchProducts(callback) {
+function fetchProducts(callback) {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', '../Json/products.json', true);
     xhr.onreadystatechange = function () {
@@ -71,7 +69,7 @@ function renderProducts(products, startIndex) {
         cardList.appendChild(li);
     });
 
-    cardList.style.transform = `translateX(-${startIndex * 315}px)`; // 295px width + 20px margin
+    cardList.style.transform = `translateX(-${startIndex * 315}px)`;
 
     const prevButton = document.getElementById('prev-button');
     const nextButton = document.getElementById('next-button');
@@ -81,8 +79,6 @@ function renderProducts(products, startIndex) {
     } else {
         console.error('Slider buttons not found');
     }
-
-    console.log(`Rendered products, showing from index ${startIndex} (transform: -${startIndex * 315}px)`);
 }
 
 function initSlider() {
@@ -107,10 +103,40 @@ function initSlider() {
                     renderProducts(products, currentIndex);
                 }
             });
-        } else {
-            console.error('Buttons not found for event listeners');
         }
     });
 }
 
-document.addEventListener('DOMContentLoaded', initSlider);
+function updateUserUI() {
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    const signupMessage = document.getElementById('signup-message');
+    const userIconLink = document.getElementById('user-icon');
+
+    if (loggedInUser) {
+        signupMessage.innerHTML = `Welcome back, ${loggedInUser}! <a href="#" id="logout-link">Logout</a>`;
+        userIconLink.href = "#";
+        userIconLink.onclick = (e) => {
+            e.preventDefault();
+            alert(`You are already logged in as ${loggedInUser}`);
+        };
+
+        const logoutLink = document.getElementById('logout-link');
+        if (logoutLink) {
+            logoutLink.onclick = (e) => {
+                e.preventDefault();
+                localStorage.removeItem('loggedInUser');
+                updateUserUI();
+                window.location.reload();
+            };
+        }
+    } else {
+        signupMessage.innerHTML = 'Sign up and get 20% off your first order. <a href="../Login and Register/LoginandRegister.html?form=register">Sign Up Now</a>';
+        userIconLink.href = "../Login and Register/LoginandRegister.html";
+        userIconLink.onclick = null;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    initSlider();
+    updateUserUI();
+});

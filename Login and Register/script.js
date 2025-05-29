@@ -5,7 +5,12 @@ const togglePasswordIcons = document.querySelectorAll('.toggle-password');
 const loginForm = document.querySelector('.form-box.login form');
 const registerForm = document.querySelector('.form-box.register form');
 
-// Function to display messages
+// Check URL for form parameter and show register form if requested
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('form') === 'register') {
+    container.classList.add('active');
+}
+
 function showMessage(form, message, type) {
     const messageBox = form.querySelector('.message-box');
     messageBox.textContent = message;
@@ -13,10 +18,16 @@ function showMessage(form, message, type) {
     setTimeout(() => {
         messageBox.textContent = '';
         messageBox.className = 'message-box';
-    }, 3000); // Clear message after 3 seconds
+    }, 3000);
 }
 
-// Toggle between login and register forms
+function checkLoggedIn() {
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    if (loggedInUser) {
+        window.location.href = '../Home/Home.html';
+    }
+}
+
 registerBtn.addEventListener('click', () => {
     container.classList.add('active');
 });
@@ -25,7 +36,6 @@ loginBtn.addEventListener('click', () => {
     container.classList.remove('active');
 });
 
-// Password visibility toggle
 togglePasswordIcons.forEach(icon => {
     icon.addEventListener('click', () => {
         const input = icon.parentElement.querySelector('input');
@@ -41,7 +51,6 @@ togglePasswordIcons.forEach(icon => {
     });
 });
 
-// Handle registration
 registerForm.addEventListener('submit', (e) => {
     e.preventDefault();
     
@@ -50,16 +59,13 @@ registerForm.addEventListener('submit', (e) => {
     const password = registerForm.querySelector('input[placeholder="Password"]').value;
     const confirmPassword = registerForm.querySelector('input[placeholder="Confirm Password"]').value;
 
-    // Check if passwords match
     if (password !== confirmPassword) {
         showMessage(registerForm, 'Passwords do not match!', 'error');
         return;
     }
 
-    // Get existing users from localStorage or initialize empty array
     let users = JSON.parse(localStorage.getItem('users')) || [];
 
-    // Check for duplicate username
     if (users.some(user => user.username === username)) {
         showMessage(registerForm, 'Username already exists! Please choose a different username.', 'error');
         return;
@@ -71,7 +77,7 @@ registerForm.addEventListener('submit', (e) => {
     showMessage(registerForm, 'Registration successful! You can now login.', 'success');
     registerForm.reset();
     setTimeout(() => {
-        container.classList.remove('active'); // Switch to login form
+        container.classList.remove('active');
     }, 3000);
 });
 
@@ -86,11 +92,15 @@ loginForm.addEventListener('submit', (e) => {
     const user = users.find(user => user.username === username && user.password === password);
     
     if (user) {
-        // Store the logged-in user's username
         localStorage.setItem('loggedInUser', username);
         showMessage(loginForm, 'Login successful! Welcome ' + username, 'success');
         loginForm.reset();
+        setTimeout(() => {
+            window.location.href = '../Home/Home.html';
+        }, 1500);
     } else {
         showMessage(loginForm, 'Invalid username or password!', 'error');
     }
 });
+
+document.addEventListener('DOMContentLoaded', checkLoggedIn);
