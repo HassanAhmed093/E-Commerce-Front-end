@@ -255,12 +255,21 @@
  /* new-arrivals */
 
 
-.rating .filled {
-    color: #FFD700; /* Brighter yellow */
+
+.product-rating {
+    font-size: 0.9rem;
+    margin: 8px 0;
+    color: #ffd700;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
-.rating .empty {
-    color: #E0E0E0; /* Soft gray */
+
+.rating-number {
+    color: #666;
+    margin-left: 5px;
 }
+
 .product-card {
     display: flex;
     align-items: center;
@@ -279,7 +288,7 @@
     margin: 0;
 }
 .price {
-    color: #2E7D32; /* Green accent */
+    
     font-weight: bold;
 }
 
@@ -308,10 +317,14 @@
 }
 
 .card-list {
+     
+    transition: transform 0.5s ease-in-out;
+    will-change: transform;
+
     list-style: none;
     display: flex;
     padding-block: 50px;
-    transition: transform 0.5s ease-in-out;
+    /* transition: transform 0.5s ease-in-out; */
 }
 
 .card-item {
@@ -324,7 +337,7 @@
 }
 
 .card-link {
-    text-decoration: none;
+    /* text-decoration: none; */
     color: black;
     display: block;
 }
