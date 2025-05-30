@@ -3,12 +3,14 @@ const subtotalDisplay = document.getElementById('subtotal');
 const discountDisplay = document.getElementById('discount');
 const totalDisplay = document.getElementById('total');
 const xmark = document.getElementById('xmark');
-
+const checkoutBtn = document.getElementById('checkout-btn');
 let cartItems = [];
+
 
 xmark.addEventListener("click", function () {
     document.getElementsByClassName('sign-up')[0].style.display = 'none';
-})
+});
+checkoutBtn.addEventListener('click', createOrder);
 
 function loadCartItems() {
     const loggedInUser = localStorage.getItem('loggedInUser');
@@ -24,12 +26,12 @@ function loadCartItems() {
         console.log('XMLHttpRequest state:', xhr.readyState, 'Status:', xhr.status);
         if (xhr.readyState === 4 && xhr.status === 200) {
             const products = JSON.parse(xhr.responseText);
-            const userCarts = JSON.parse(localStorage.getItem('userCarts'));
-            cartItems = userCarts[loggedInUser];
+            const userCarts = JSON.parse(localStorage.getItem('userCarts')) || {};
+            cartItems = userCarts[loggedInUser] || [];
             cartItems = cartItems.map(item => {
                 const product = products.find(p => p.ID === item.ID);
                 return product ? { ...product, quantity: item.quantity } : null;
-            });
+            }).filter(item => item !== null);
 
             if (cartItems.length === 0) {
                 cartItemsContainer.innerHTML = 'No items in cart';
@@ -38,12 +40,8 @@ function loadCartItems() {
 
             displayCartItems();
             updateTotal();
-
         }
-
     };
-
-
 }
 
 function displayCartItems() {
@@ -66,8 +64,8 @@ function displayCartItems() {
             </div>
             <button class="remove-item"><i class="fas fa-trash"></i></button>
         `;
-        
-        cartItem.querySelector('.decrease').addEventListener('click', function(){
+
+        cartItem.querySelector('.decrease').addEventListener('click', function () {
             if (item.quantity > 1) {
                 item.quantity--;
                 updateUserCart();
@@ -76,8 +74,7 @@ function displayCartItems() {
             }
         });
 
-        cartItem.querySelector('.increase').addEventListener('click', function() {
-            
+        cartItem.querySelector('.increase').addEventListener('click', function () {
             if (item.quantity + 1 <= item.UnitsInStock) {
                 item.quantity++;
                 updateUserCart();
@@ -88,7 +85,7 @@ function displayCartItems() {
             }
         });
 
-        cartItem.querySelector('.remove-item').addEventListener('click',function() {
+        cartItem.querySelector('.remove-item').addEventListener('click', function () {
             cartItems.splice(index, 1);
             updateUserCart();
             displayCartItems();
@@ -99,17 +96,15 @@ function displayCartItems() {
     });
 }
 
-
 function updateUserCart() {
     const loggedInUser = localStorage.getItem('loggedInUser');
     if (loggedInUser) {
-        let userCarts = JSON.parse(localStorage.getItem('userCarts'));
+        let userCarts = JSON.parse(localStorage.getItem('userCarts')) || {};
         userCarts[loggedInUser] = cartItems;
         localStorage.setItem('userCarts', JSON.stringify(userCarts));
         console.log('Updated user cart in localStorage:', userCarts);
     }
 }
-
 
 function updateTotal() {
     let subtotal = 0;
@@ -117,13 +112,76 @@ function updateTotal() {
         subtotal += item.Price * item.quantity;
     });
     const discount = subtotal * 0.1;
-    const deliveryFee = 15; 
+    const deliveryFee = 15;
     const total = subtotal - discount + deliveryFee;
 
     subtotalDisplay.textContent = `$${subtotal.toFixed(2)}`;
     discountDisplay.textContent = `-$${discount.toFixed(2)}`;
     totalDisplay.textContent = `$${total.toFixed(2)}`;
+}
 
+function createOrder() {
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    if (!loggedInUser || cartItems.length === 0) {
+        alert('No items to checkout or user not logged in.');
+        return;
+    }
+
+    let subtotal = 0;
+    cartItems.forEach(item => {
+        subtotal += item.Price * item.quantity;
+    });
+    const discount = subtotal * 0.1;
+    const deliveryFee = 15;
+    const total = subtotal - discount + deliveryFee;
+    let userOrders = JSON.parse(localStorage.getItem('userOrders'));
+    const userOrderCount = (userOrders[loggedInUser]).length;
+    const orderId = userOrderCount + 1;
+
+    const order = {
+        orderId: orderId,
+        user: loggedInUser,
+        items: cartItems.map(item => ({
+            ID: item.ID,
+            Name: item.Name,
+            quantity: item.quantity,
+            Price: item.Price
+        })),
+        total: `$${total.toFixed(2)}`
+    };
+
+    if (!userOrders[loggedInUser]) {
+        userOrders[loggedInUser] = [];
+    }
+    userOrders[loggedInUser].push(order);
+    localStorage.setItem('userOrders', JSON.stringify(userOrders));
+
+    const windowWidth = 400;
+    const windowHeight = 300;
+    const left = (screen.width - windowWidth) / 2;
+    const top = (screen.height - windowHeight) / 2;
+
+    const params = new URLSearchParams({
+        orderId: order.orderId,
+        total: order.total
+    }).toString();
+
+    window.open(
+        `order-details.html?${params}`,
+        '_blank',
+        `width=${windowWidth},height=${windowHeight},left=${left},top=${top}`
+    );
+
+    let userCarts = JSON.parse(localStorage.getItem('userCarts')) || {};
+    userCarts[loggedInUser] = [];
+    localStorage.setItem('userCarts', JSON.stringify(userCarts));
+    cartItems = [];
+
+
+    displayCartItems();
+    updateTotal();
+    cartItemsContainer.innerHTML = 'Order placed successfully! Your cart is now empty.';
+    console.log('Cart cleared after checkout.');
 }
 
 function updateUserUI() {
