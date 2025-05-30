@@ -1,54 +1,51 @@
-// Select DOM elements
 const cartItemsContainer = document.getElementById('cartItems');
 const subtotalDisplay = document.getElementById('subtotal');
 const discountDisplay = document.getElementById('discount');
 const totalDisplay = document.getElementById('total');
+const xmark = document.getElementById('xmark');
 
-// Array to store cart items (with quantities)
 let cartItems = [];
 
-// Function to load cart items for the logged-in user
+xmark.addEventListener("click", function () {
+    document.getElementsByClassName('sign-up')[0].style.display = 'none';
+})
+
 function loadCartItems() {
     const loggedInUser = localStorage.getItem('loggedInUser');
     if (!loggedInUser) {
-        cartItemsContainer.innerHTML = '<p>Please log in to view your cart.</p>';
+        cartItemsContainer.innerHTML = 'Please log in to view your cart';
         return;
     }
 
-    // Fetch data from the local products.json file
-    fetch('../Json/products.json')
-        .then(response => {
-            if (!response.ok) throw new Error('Network response was not ok ' + response.status);
-            return response.json();
-        })
-        .then(products => {
-            // Get the user's cart from localStorage
-            const userCarts = JSON.parse(localStorage.getItem('userCarts')) || {};
-            cartItems = userCarts[loggedInUser] || [];
-
-            // Validate cart items against products.json
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', '../Json/products.json', true);
+    xhr.send();
+    xhr.onreadystatechange = function () {
+        console.log('XMLHttpRequest state:', xhr.readyState, 'Status:', xhr.status);
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            const products = JSON.parse(xhr.responseText);
+            const userCarts = JSON.parse(localStorage.getItem('userCarts'));
+            cartItems = userCarts[loggedInUser];
             cartItems = cartItems.map(item => {
                 const product = products.find(p => p.ID === item.ID);
                 return product ? { ...product, quantity: item.quantity } : null;
-            }).filter(item => item !== null);
+            });
 
             if (cartItems.length === 0) {
-                cartItemsContainer.innerHTML = '<p>No items in cart.</p>';
+                cartItemsContainer.innerHTML = 'No items in cart';
                 return;
             }
 
-            // Display cart items
             displayCartItems();
-            // Update total
             updateTotal();
-        })
-        .catch(error => {
-            console.error('Error loading cart:', error);
-            cartItemsContainer.innerHTML = '<p>Error loading cart. Please try again.</p>';
-        });
+
+        }
+
+    };
+
+
 }
 
-// Function to display cart items in the DOM
 function displayCartItems() {
     cartItemsContainer.innerHTML = '';
 
@@ -69,9 +66,8 @@ function displayCartItems() {
             </div>
             <button class="remove-item"><i class="fas fa-trash"></i></button>
         `;
-
-        // Add event listeners for quantity controls and remove button
-        cartItem.querySelector('.decrease').addEventListener('click', () => {
+        
+        cartItem.querySelector('.decrease').addEventListener('click', function(){
             if (item.quantity > 1) {
                 item.quantity--;
                 updateUserCart();
@@ -80,8 +76,8 @@ function displayCartItems() {
             }
         });
 
-        cartItem.querySelector('.increase').addEventListener('click', () => {
-            // Validate stock
+        cartItem.querySelector('.increase').addEventListener('click', function() {
+            
             if (item.quantity + 1 <= item.UnitsInStock) {
                 item.quantity++;
                 updateUserCart();
@@ -92,7 +88,7 @@ function displayCartItems() {
             }
         });
 
-        cartItem.querySelector('.remove-item').addEventListener('click', () => {
+        cartItem.querySelector('.remove-item').addEventListener('click',function() {
             cartItems.splice(index, 1);
             updateUserCart();
             displayCartItems();
@@ -103,30 +99,63 @@ function displayCartItems() {
     });
 }
 
-// Function to update the user's cart in localStorage
+
 function updateUserCart() {
     const loggedInUser = localStorage.getItem('loggedInUser');
     if (loggedInUser) {
-        let userCarts = JSON.parse(localStorage.getItem('userCarts')) || {};
+        let userCarts = JSON.parse(localStorage.getItem('userCarts'));
         userCarts[loggedInUser] = cartItems;
         localStorage.setItem('userCarts', JSON.stringify(userCarts));
+        console.log('Updated user cart in localStorage:', userCarts);
     }
 }
 
-// Function to update cart total
+
 function updateTotal() {
     let subtotal = 0;
     cartItems.forEach(item => {
         subtotal += item.Price * item.quantity;
     });
-    const discount = subtotal * 0.1; // 10% discount
-    const deliveryFee = 15; // $15 delivery fee
+    const discount = subtotal * 0.1;
+    const deliveryFee = 15; 
     const total = subtotal - discount + deliveryFee;
 
     subtotalDisplay.textContent = `$${subtotal.toFixed(2)}`;
     discountDisplay.textContent = `-$${discount.toFixed(2)}`;
     totalDisplay.textContent = `$${total.toFixed(2)}`;
+
 }
 
-// Load cart items when the page loads
-document.addEventListener('DOMContentLoaded', loadCartItems);
+function updateUserUI() {
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    const signupMessage = document.getElementById('signup-message');
+    const userIconLink = document.getElementById('user-icon');
+
+    if (loggedInUser) {
+        signupMessage.innerHTML = `Welcome back, ${loggedInUser}! <a href="#" id="logout-link">Logout</a>`;
+        userIconLink.href = "#";
+        userIconLink.onclick = (e) => {
+            e.preventDefault();
+            alert(`You are already logged in as ${loggedInUser}`);
+        };
+
+        const logoutLink = document.getElementById('logout-link');
+        if (logoutLink) {
+            logoutLink.onclick = (e) => {
+                e.preventDefault();
+                localStorage.removeItem('loggedInUser');
+                updateUserUI();
+                window.location.reload();
+            };
+        }
+    } else {
+        signupMessage.innerHTML = 'Sign up and get 20% off your first order. <a href="../Login and Register/LoginandRegister.html?form=register">Sign Up Now</a>';
+        userIconLink.href = "../Login and Register/LoginandRegister.html";
+        userIconLink.onclick = null;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    loadCartItems();
+    updateUserUI();
+});
