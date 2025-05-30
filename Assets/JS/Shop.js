@@ -13,7 +13,7 @@ function setLoadingState(loading) {
 function fetchProducts() {
     setLoadingState(true);
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', '../Json/products.json', true);
+    xhr.open('GET', 'Assets/Json/products.json', true);
     
     xhr.onload = function() {
         if (xhr.status === 200) {
@@ -33,7 +33,6 @@ function fetchProducts() {
     xhr.send();
 }
 
-// Update displayProducts function
 function displayProducts() {
     const container = document.getElementById('productsContainer');
     container.innerHTML = '';
@@ -182,10 +181,8 @@ function addToCart(productId) {
         }
     }
 
-    // Save updated cart
     localStorage.setItem('userCarts', JSON.stringify(userCarts));
 
-    // Update button UI
     const button = event.currentTarget;
     button.innerHTML = '<i class="fas fa-check"></i> Added!';
     button.style.background = '#4CAF50';

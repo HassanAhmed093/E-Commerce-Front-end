@@ -1,10 +1,10 @@
  
 let products = [];
-let currentIndex = 0; // Initialize currentIndex globally or manage it within initSlider scope
+let currentIndex = 0; 
 
 function fetchProducts(callback) {
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', '../Json/products.json', true);
+    xhr.open('GET', 'Assets/Json/products.json', true);
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
@@ -110,7 +110,7 @@ function showProductDetails(productId) {
     const product = products.find(p => p.ID === productId);
     if (product) {
         localStorage.setItem('selectedProduct', JSON.stringify(product));
-        window.location.href = '../Shop/productDetails.html';
+        window.location.href = '../productDetails.html';
     } else {
         console.error('Product not found with ID:', productId);
     }
@@ -168,8 +168,8 @@ function updateUserUI() {
             };
         }
     } else {
-        signupMessage.innerHTML = 'Sign up and get 20% off your first order. <a href="../Login and Register/LoginandRegister.html?form=register">Sign Up Now</a>';
-        userIconLink.href = "../Login and Register/LoginandRegister.html";
+        signupMessage.innerHTML = 'Sign up and get 20% off your first order. <a href="../LoginandRegister.html?form=register">Sign Up Now</a>';
+        userIconLink.href = "../LoginandRegister.html";
         userIconLink.onclick = null;
     }
 }

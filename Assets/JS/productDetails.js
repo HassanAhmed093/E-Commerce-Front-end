@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function displayProductDetails(product) {
-    document.getElementById('mainImage').src = '../assets/Img/Default.Webp';
+    document.getElementById('mainImage').src = product.image;
     document.getElementById('productName').textContent = product.Name;
     document.getElementById('productDetails').textContent = product.Details;
     document.getElementById('ratingNumber').textContent = product.Ratings.toFixed(1);
@@ -69,16 +69,13 @@ function addToCartFromDetails() {
         return;
     }
 
-    // Get the user's cart from localStorage
     let userCarts = JSON.parse(localStorage.getItem('userCarts')) || {};
     if (!userCarts[loggedInUser]) {
         userCarts[loggedInUser] = [];
     }
 
-    // Check if product is already in cart
     const existingItem = userCarts[loggedInUser].find(item => item.ID === product.ID);
     if (existingItem) {
-        // Update quantity if within stock limit
         if (existingItem.quantity + quantity <= product.UnitsInStock) {
             existingItem.quantity += quantity;
         } else {
@@ -86,14 +83,11 @@ function addToCartFromDetails() {
             return;
         }
     } else {
-        // Add new item
         userCarts[loggedInUser].push({ ...product, quantity });
     }
 
-    // Save updated cart
     localStorage.setItem('userCarts', JSON.stringify(userCarts));
 
-    // Update button UI
     const button = document.querySelector('.add-to-cart');
     button.innerHTML = '<i class="fas fa-check"></i> Added to Cart!';
     button.style.background = '#4CAF50';

@@ -20,7 +20,7 @@ function loadCartItems() {
     }
 
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', '../Json/products.json', true);
+    xhr.open('GET', 'Assets/Json/products.json', true);
     xhr.send();
     xhr.onreadystatechange = function () {
         console.log('XMLHttpRequest state:', xhr.readyState, 'Status:', xhr.status);
@@ -207,8 +207,8 @@ function updateUserUI() {
             };
         }
     } else {
-        signupMessage.innerHTML = 'Sign up and get 20% off your first order. <a href="../Login and Register/LoginandRegister.html?form=register">Sign Up Now</a>';
-        userIconLink.href = "../Login and Register/LoginandRegister.html";
+        signupMessage.innerHTML = 'Sign up and get 20% off your first order. <a href="../LoginandRegister.html?form=register">Sign Up Now</a>';
+        userIconLink.href = "../LoginandRegister.html";
         userIconLink.onclick = null;
     }
 }
