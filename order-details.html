@@ -3,49 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShopCo - Order Confirmation</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
-            background-color: white;
-        }
-        .order-details {
-            background: wheat;
-            padding: 15px;
-            border-radius: 10px;
-            max-width: 400px;
-            margin: 0 auto;
-        }
-        .close-btn {
-            background-color: lightslategray;
-            color: white;
-            padding: 10px;
-            width: 100%;
-            border-radius: 5px;
-            margin-top: 15px;
-        }
-        .close-btn:hover {
-            background-color: darkslategrey;
-        }
-    </style>
+    <title>Order Confirmation</title>
+    <link rel="stylesheet" href="./Assets/CSS/order-details.css">
 </head>
 <body>
     <div class="order-details">
         <h2>Order Confirmation</h2>
         <p><strong>Order ID:</strong> <span id="order-id"></span></p>
+        <h3>Order Items</h3>
+        <div id="order-items"></div>
+        <p><strong>Subtotal:</strong> <span id="subtotal"></span></p>
+        <p><strong>Discount (10%):</strong> <span id="discount"></span></p>
+        <p><strong>Delivery Fee:</strong> <span id="delivery-fee">$15.00</span></p>
         <p><strong>Total:</strong> <span id="order-total"></span></p>
         <p>Thank you for your order!</p>
         <button class="close-btn" onclick="window.close()">Close</button>
     </div>
-
-    <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const orderId = urlParams.get('orderId');
-        const total = urlParams.get('total');
-        document.getElementById('order-id').textContent = orderId;
-        document.getElementById('order-total').textContent = `$${total}`;
-    </script>
+    <script src="./Assets/JS/order-details.js"></script>
 </body>
 </html>

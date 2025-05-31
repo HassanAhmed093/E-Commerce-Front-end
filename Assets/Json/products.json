@@ -8,7 +8,8 @@
     "Price": 99.98,
     "UnitsInStock": 196,
     "UnitsSold": 206,
-    "Categories": "Footwear"
+    "Categories": "Footwear",
+    "Brand": "VERSACE"
   },
   {
     "ID": 2,
@@ -19,7 +20,8 @@
     "Price": 32.52,
     "UnitsInStock": 108,
     "UnitsSold": 194,
-    "Categories": "Blouses"
+    "Categories": "Blouses",
+    "Brand": "ZARA"
   },
   {
     "ID": 3,
@@ -30,7 +32,8 @@
     "Price": 87.2,
     "UnitsInStock": 198,
     "UnitsSold": 109,
-    "Categories": "Pants"
+    "Categories": "Pants",
+    "Brand": "GUCCI"
   },
   {
     "ID": 4,
@@ -41,7 +44,8 @@
     "Price": 58.34,
     "UnitsInStock": 80,
     "UnitsSold": 280,
-    "Categories": "Outerwear"
+    "Categories": "Outerwear",
+    "Brand": "PRADA"
   },
   {
     "ID": 5,
@@ -52,7 +56,8 @@
     "Price": 121.44,
     "UnitsInStock": 99,
     "UnitsSold": 281,
-    "Categories": "Blouses"
+    "Categories": "Blouses",
+    "Brand": "Calvin Klein"
   },
   {
     "ID": 6,
@@ -63,7 +68,8 @@
     "Price": 133.32,
     "UnitsInStock": 177,
     "UnitsSold": 369,
-    "Categories": "Accessories"
+    "Categories": "Accessories",
+    "Brand": "VERSACE"
   },
   {
     "ID": 7,
@@ -74,7 +80,8 @@
     "Price": 102.67,
     "UnitsInStock": 64,
     "UnitsSold": 374,
-    "Categories": "Sweaters"
+    "Categories": "Sweaters",
+    "Brand": "ZARA"
   },
   {
     "ID": 8,
@@ -85,7 +92,8 @@
     "Price": 70.93,
     "UnitsInStock": 196,
     "UnitsSold": 300,
-    "Categories": "Activewear"
+    "Categories": "Activewear",
+    "Brand": "GUCCI"
   },
   {
     "ID": 9,
@@ -96,7 +104,8 @@
     "Price": 148.14,
     "UnitsInStock": 124,
     "UnitsSold": 392,
-    "Categories": "Pants"
+    "Categories": "Pants",
+    "Brand": "PRADA"
   },
   {
     "ID": 10,
@@ -107,7 +116,8 @@
     "Price": 82.96,
     "UnitsInStock": 46,
     "UnitsSold": 94,
-    "Categories": "T-Shirts"
+    "Categories": "T-Shirts",
+    "Brand": "Calvin Klein"
   },
   {
     "ID": 11,
@@ -118,7 +128,8 @@
     "Price": 24.39,
     "UnitsInStock": 82,
     "UnitsSold": 182,
-    "Categories": "Footwear"
+    "Categories": "Footwear",
+    "Brand": "VERSACE"
   },
   {
     "ID": 12,
@@ -129,7 +140,8 @@
     "Price": 41.96,
     "UnitsInStock": 89,
     "UnitsSold": 294,
-    "Categories": "Shirts"
+    "Categories": "Shirts",
+    "Brand": "ZARA"
   },
   {
     "ID": 13,
@@ -140,7 +152,8 @@
     "Price": 31.19,
     "UnitsInStock": 123,
     "UnitsSold": 140,
-    "Categories": "Accessories"
+    "Categories": "Accessories",
+    "Brand": "GUCCI"
   },
   {
     "ID": 14,
@@ -151,7 +164,8 @@
     "Price": 43.39,
     "UnitsInStock": 23,
     "UnitsSold": 387,
-    "Categories": "Blouses"
+    "Categories": "Blouses",
+    "Brand": "PRADA"
   },
   {
     "ID": 15,
@@ -162,7 +176,8 @@
     "Price": 129.38,
     "UnitsInStock": 124,
     "UnitsSold": 74,
-    "Categories": "Pants"
+    "Categories": "Pants",
+    "Brand": "Calvin Klein"
   },
   {
     "ID": 16,
@@ -173,7 +188,8 @@
     "Price": 85.2,
     "UnitsInStock": 90,
     "UnitsSold": 130,
-    "Categories": "T-Shirts"
+    "Categories": "T-Shirts",
+    "Brand": "VERSACE"
   },
   {
     "ID": 17,
@@ -184,7 +200,8 @@
     "Price": 75.34,
     "UnitsInStock": 35,
     "UnitsSold": 303,
-    "Categories": "Pants"
+    "Categories": "Pants",
+    "Brand": "ZARA"
   },
   {
     "ID": 18,
@@ -195,7 +212,8 @@
     "Price": 64.82,
     "UnitsInStock": 181,
     "UnitsSold": 184,
-    "Categories": "Outerwear"
+    "Categories": "Outerwear",
+    "Brand": "GUCCI"
   },
   {
     "ID": 19,
@@ -206,7 +224,8 @@
     "Price": 159.21,
     "UnitsInStock": 150,
     "UnitsSold": 150,
-    "Categories": "Outerwear"
+    "Categories": "Outerwear",
+    "Brand": "PRADA"
   },
   {
     "ID": 20,
@@ -217,7 +236,8 @@
     "Price": 154.77,
     "UnitsInStock": 136,
     "UnitsSold": 71,
-    "Categories": "Sweaters"
+    "Categories": "Sweaters",
+    "Brand": "Calvin Klein"
   },
   {
     "ID": 21,
@@ -228,7 +248,8 @@
     "Price": 81.86,
     "UnitsInStock": 115,
     "UnitsSold": 106,
-    "Categories": "Shirts"
+    "Categories": "Shirts",
+    "Brand": "VERSACE"
   },
   {
     "ID": 22,
@@ -239,7 +260,8 @@
     "Price": 61.75,
     "UnitsInStock": 26,
     "UnitsSold": 387,
-    "Categories": "Accessories"
+    "Categories": "Accessories",
+    "Brand": "ZARA"
   },
   {
     "ID": 23,
@@ -250,7 +272,8 @@
     "Price": 110.26,
     "UnitsInStock": 82,
     "UnitsSold": 148,
-    "Categories": "Activewear"
+    "Categories": "Activewear",
+    "Brand": "GUCCI"
   },
   {
     "ID": 24,
@@ -261,7 +284,8 @@
     "Price": 79.56,
     "UnitsInStock": 23,
     "UnitsSold": 383,
-    "Categories": "Shirts"
+    "Categories": "Shirts",
+    "Brand": "PRADA"
   },
   {
     "ID": 25,
@@ -272,7 +296,8 @@
     "Price": 146.0,
     "UnitsInStock": 145,
     "UnitsSold": 363,
-    "Categories": "Outerwear"
+    "Categories": "Outerwear",
+    "Brand": "Calvin Klein"
   },
   {
     "ID": 26,
@@ -283,7 +308,8 @@
     "Price": 49.07,
     "UnitsInStock": 75,
     "UnitsSold": 71,
-    "Categories": "Outerwear"
+    "Categories": "Outerwear",
+    "Brand": "VERSACE"
   },
   {
     "ID": 27,
@@ -294,7 +320,8 @@
     "Price": 100.23,
     "UnitsInStock": 122,
     "UnitsSold": 358,
-    "Categories": "Sweaters"
+    "Categories": "Sweaters",
+    "Brand": "ZARA"
   },
   {
     "ID": 28,
@@ -305,7 +332,8 @@
     "Price": 111.03,
     "UnitsInStock": 61,
     "UnitsSold": 60,
-    "Categories": "Outerwear"
+    "Categories": "Outerwear",
+    "Brand": "GUCCI"
   },
   {
     "ID": 29,
@@ -316,7 +344,8 @@
     "Price": 145.67,
     "UnitsInStock": 62,
     "UnitsSold": 314,
-    "Categories": "Blouses"
+    "Categories": "Blouses",
+    "Brand": "PRADA"
   },
   {
     "ID": 30,
@@ -327,7 +356,8 @@
     "Price": 158.21,
     "UnitsInStock": 86,
     "UnitsSold": 52,
-    "Categories": "Outerwear"
+    "Categories": "Outerwear",
+    "Brand": "Calvin Klein"
   },
   {
     "ID": 31,
@@ -338,7 +368,8 @@
     "Price": 110.05,
     "UnitsInStock": 22,
     "UnitsSold": 351,
-    "Categories": "Blouses"
+    "Categories": "Blouses",
+    "Brand": "VERSACE"
   },
   {
     "ID": 32,
@@ -349,7 +380,8 @@
     "Price": 84.78,
     "UnitsInStock": 66,
     "UnitsSold": 228,
-    "Categories": "T-Shirts"
+    "Categories": "T-Shirts",
+    "Brand": "ZARA"
   },
   {
     "ID": 33,
@@ -360,7 +392,8 @@
     "Price": 87.69,
     "UnitsInStock": 147,
     "UnitsSold": 351,
-    "Categories": "Accessories"
+    "Categories": "Accessories",
+    "Brand": "GUCCI"
   },
   {
     "ID": 34,
@@ -371,7 +404,8 @@
     "Price": 150.57,
     "UnitsInStock": 108,
     "UnitsSold": 141,
-    "Categories": "Sweaters"
+    "Categories": "Sweaters",
+    "Brand": "PRADA"
   },
   {
     "ID": 35,
@@ -382,7 +416,8 @@
     "Price": 118.65,
     "UnitsInStock": 39,
     "UnitsSold": 349,
-    "Categories": "T-Shirts"
+    "Categories": "T-Shirts",
+    "Brand": "Calvin Klein"
   },
   {
     "ID": 36,
@@ -393,7 +428,8 @@
     "Price": 104.33,
     "UnitsInStock": 50,
     "UnitsSold": 176,
-    "Categories": "Accessories"
+    "Categories": "Accessories",
+    "Brand": "VERSACE"
   },
   {
     "ID": 37,
@@ -404,7 +440,8 @@
     "Price": 33.1,
     "UnitsInStock": 177,
     "UnitsSold": 359,
-    "Categories": "Outerwear"
+    "Categories": "Outerwear",
+    "Brand": "ZARA"
   },
   {
     "ID": 38,
@@ -415,7 +452,8 @@
     "Price": 98.7,
     "UnitsInStock": 91,
     "UnitsSold": 307,
-    "Categories": "Pants"
+    "Categories": "Pants",
+    "Brand": "GUCCI"
   },
   {
     "ID": 39,
@@ -426,7 +464,8 @@
     "Price": 59.91,
     "UnitsInStock": 25,
     "UnitsSold": 173,
-    "Categories": "Accessories"
+    "Categories": "Accessories",
+    "Brand": "PRADA"
   },
   {
     "ID": 40,
@@ -437,7 +476,8 @@
     "Price": 154.84,
     "UnitsInStock": 173,
     "UnitsSold": 146,
-    "Categories": "Blouses"
+    "Categories": "Blouses",
+    "Brand": "Calvin Klein"
   },
   {
     "ID": 41,
@@ -448,7 +488,8 @@
     "Price": 67.29,
     "UnitsInStock": 94,
     "UnitsSold": 305,
-    "Categories": "Outerwear"
+    "Categories": "Outerwear",
+    "Brand": "VERSACE"
   },
   {
     "ID": 42,
@@ -459,7 +500,8 @@
     "Price": 156.76,
     "UnitsInStock": 27,
     "UnitsSold": 358,
-    "Categories": "Footwear"
+    "Categories": "Footwear",
+    "Brand": "ZARA"
   },
   {
     "ID": 43,
@@ -470,7 +512,8 @@
     "Price": 121.92,
     "UnitsInStock": 94,
     "UnitsSold": 297,
-    "Categories": "Activewear"
+    "Categories": "Activewear",
+    "Brand": "GUCCI"
   },
   {
     "ID": 44,
@@ -481,7 +524,8 @@
     "Price": 100.74,
     "UnitsInStock": 84,
     "UnitsSold": 268,
-    "Categories": "Outerwear"
+    "Categories": "Outerwear",
+    "Brand": "PRADA"
   },
   {
     "ID": 45,
@@ -492,7 +536,8 @@
     "Price": 30.13,
     "UnitsInStock": 24,
     "UnitsSold": 152,
-    "Categories": "Blouses"
+    "Categories": "Blouses",
+    "Brand": "Calvin Klein"
   },
   {
     "ID": 46,
@@ -503,7 +548,8 @@
     "Price": 67.29,
     "UnitsInStock": 82,
     "UnitsSold": 264,
-    "Categories": "Accessories"
+    "Categories": "Accessories",
+    "Brand": "VERSACE"
   },
   {
     "ID": 47,
@@ -514,7 +560,8 @@
     "Price": 73.66,
     "UnitsInStock": 184,
     "UnitsSold": 343,
-    "Categories": "Footwear"
+    "Categories": "Footwear",
+    "Brand": "ZARA"
   },
   {
     "ID": 48,
@@ -525,7 +572,8 @@
     "Price": 26.72,
     "UnitsInStock": 66,
     "UnitsSold": 157,
-    "Categories": "Footwear"
+    "Categories": "Footwear",
+    "Brand": "GUCCI"
   },
   {
     "ID": 49,
@@ -536,7 +584,8 @@
     "Price": 64.95,
     "UnitsInStock": 69,
     "UnitsSold": 61,
-    "Categories": "Sweaters"
+    "Categories": "Sweaters",
+    "Brand": "PRADA"
   },
   {
     "ID": 50,
@@ -547,6 +596,7 @@
     "Price": 137.44,
     "UnitsInStock": 28,
     "UnitsSold": 337,
-    "Categories": "Shirts"
+    "Categories": "Shirts",
+    "Brand": "Calvin Klein"
   }
 ]

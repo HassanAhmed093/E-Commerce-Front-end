@@ -126,7 +126,7 @@ header {
 
 
 .user-actions a {
-    color: rgba(0, 0, 0, 0.6);
+    /* color: rgba(0, 0, 0, 0.6); */
     text-decoration: none;
     margin-right: 40px;
 }

@@ -1,7 +1,10 @@
- 
 let products = [];
-let currentIndex = 0; 
-
+let newArrivalsIndex = 0;
+let saleIndex = 0;
+const xmark = document.getElementById('xmark');
+xmark.addEventListener("click", function () {
+    document.getElementsByClassName('sign-up')[0].style.display = 'none';
+});
 function fetchProducts(callback) {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', 'Assets/Json/products.json', true);
@@ -14,50 +17,53 @@ function fetchProducts(callback) {
                     callback(products);
                 } catch (error) {
                     console.error('Error parsing JSON:', error);
-                    displayError('Failed to parse product data. Check the console for details.');
+                    displayError('error-message', 'Failed to parse product data. Check the console for details.');
+                    displayError('sale-error-message', 'Failed to parse product data. Check the console for details.');
                     callback([]);
                 }
             } else {
                 console.error('Error fetching products:', xhr.status, xhr.statusText);
-                displayError(`Failed to load products. Status: ${xhr.status}. Ensure the server is running and 'products.json' exists.`);
+                displayError('error-message', `Failed to load products. Status: ${xhr.status}. Ensure the server is running and 'products.json' exists.`);
+                displayError('sale-error-message', `Failed to load products. Status: ${xhr.status}. Ensure the server is running and 'products.json' exists.`);
                 callback([]);
             }
         }
     };
     xhr.onerror = function () {
         console.error('Network error while fetching products. Are you using a local server?');
-        displayError('Network error: Cannot load products. Please use a local server (e.g., python -m http.server 8000).');
+        displayError('error-message', 'Network error: Cannot load products. Please use a local server (e.g., python -m http.server 8000).');
+        displayError('sale-error-message', 'Network error: Cannot load products. Please use a local server (e.g., python -m http.server 8000).');
         callback([]);
     };
     xhr.send();
 }
 
-function displayError(message) {
-    const errorDiv = document.getElementById('error-message');
+function displayError(errorDivId, message) {
+    const errorDiv = document.getElementById(errorDivId);
     if (errorDiv) {
         errorDiv.textContent = message;
         errorDiv.style.display = 'block';
     } else {
-        console.error('Error div not found:', message);
+        console.error(`Error div (${errorDivId}) not found:`, message);
     }
 }
 
-function renderProducts(productsToRender) { // Renamed parameter for clarity
-    const cardList = document.getElementById('card-list');
+function renderProducts(productsToRender, cardListId, currentIndex) {
+    const cardList = document.getElementById(cardListId);
     if (!cardList) {
-        console.error('Card list element not found');
+        console.error(`Card list element (${cardListId}) not found`);
         return;
     }
 
-    // Only update innerHTML if products are different or list is empty initially
-    if (cardList.children.length === 0 || productsToRender !== products) {
-        cardList.innerHTML = ''; // Clear existing cards before rendering new ones
-        if (productsToRender.length === 0) {
-            console.warn('No products to display.');
-            displayError('No products available to display.');
-            return;
-        }
+    if (productsToRender.length === 0) {
+        console.warn(`No products to display for ${cardListId}.`);
+        displayError(cardListId === 'card-list' ? 'error-message' : 'sale-error-message', 'No products available to display.');
+        cardList.innerHTML = '';
+        return;
+    }
 
+    if (cardList.children.length === 0) {
+        cardList.innerHTML = '';
         productsToRender.forEach((product) => {
             const li = document.createElement('li');
             li.className = 'card-item';
@@ -76,35 +82,29 @@ function renderProducts(productsToRender) { // Renamed parameter for clarity
         });
     }
 
-    // Apply the transform based on the current index
-    const itemWidth = 315; // Width of a card-item + its right margin (295px + 20px)
+    const itemWidth = 315;
     cardList.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
 
-    updateSliderButtons(productsToRender.length);
+    updateSliderButtons(productsToRender.length, cardListId, currentIndex);
 }
 
-function updateSliderButtons(totalProducts) {
-    const cardList = document.getElementById('card-list');
-    const prevButton = document.getElementById('prev-button');
-    const nextButton = document.getElementById('next-button');
+function updateSliderButtons(totalProducts, cardListId, currentIndex) {
+    const cardList = document.getElementById(cardListId);
+    const prevButton = document.getElementById(cardListId === 'card-list' ? 'prev-button' : 'sale-prev-button');
+    const nextButton = document.getElementById(cardListId === 'card-list' ? 'next-button' : 'sale-next-button');
 
     if (prevButton && nextButton && cardList) {
         prevButton.disabled = currentIndex === 0;
-
-        // Calculate max index based on how many items are visible at once
-        // Assuming 4 items are visible, adjust '4' if your layout changes
         const visibleItems = Math.floor(cardList.offsetWidth / 315);
-        nextButton.disabled = currentIndex >= (totalProducts - visibleItems);
+        nextButton.disabled = currentIndex >= totalProducts - visibleItems;
 
-        // Fallback for when there are fewer than 4 items, disable next button
         if (totalProducts <= visibleItems) {
             nextButton.disabled = true;
         }
     } else {
-        console.error('Slider buttons or card list not found for update.');
+        console.error(`Slider buttons or card list (${cardListId}) not found for update.`);
     }
 }
-
 
 function showProductDetails(productId) {
     const product = products.find(p => p.ID === productId);
@@ -116,35 +116,86 @@ function showProductDetails(productId) {
     }
 }
 
-function initSlider() {
-    fetchProducts(function (fetchedProducts) {
-        products = fetchedProducts; // Store fetched products globally
-        if (products.length > 0) {
-            renderProducts(products); // Initial render
-        }
-
-        const nextButton = document.getElementById('next-button');
-        const prevButton = document.getElementById('prev-button');
-
-        if (nextButton && prevButton) {
-            nextButton.addEventListener('click', () => {
-                const visibleItems = Math.floor(document.getElementById('card-list').offsetWidth / 315);
-                if (currentIndex < (products.length - visibleItems)) {
-                    currentIndex += 1;
-                    renderProducts(products);
-                }
-            });
-
-            prevButton.addEventListener('click', () => {
-                if (currentIndex > 0) {
-                    currentIndex -= 1;
-                    renderProducts(products);
-                }
-            });
-        }
-    });
+function filterSaleProducts() {
+    return products.filter(product => product.UnitsInStock < 100);
 }
 
+function filterNewArrivals() {
+    return products.filter(product => product.UnitsInStock > 100);
+}
+
+function initSlider() {
+    const newArrivalsProducts = filterNewArrivals();
+    if (newArrivalsProducts.length > 0) {
+        renderProducts(newArrivalsProducts, 'card-list', newArrivalsIndex);
+    } else {
+        console.warn('No products loaded yet for New Arrivals slider.');
+        displayError('error-message', 'Products are still loading. Please wait.');
+    }
+
+    const nextButton = document.getElementById('next-button');
+    const prevButton = document.getElementById('prev-button');
+
+    if (nextButton && prevButton) {
+        nextButton.addEventListener('click', () => {
+            const visibleItems = Math.floor(document.getElementById('card-list').offsetWidth / 315);
+            if (newArrivalsIndex < newArrivalsProducts.length - visibleItems) {
+                newArrivalsIndex += 1;
+                renderProducts(newArrivalsProducts, 'card-list', newArrivalsIndex);
+            }
+        });
+
+        prevButton.addEventListener('click', () => {
+            if (newArrivalsIndex > 0) {
+                newArrivalsIndex -= 1;
+                renderProducts(newArrivalsProducts, 'card-list', newArrivalsIndex);
+            }
+        });
+    }
+}
+
+function initSaleSlider() {
+    const saleProducts = filterSaleProducts();
+    if (saleProducts.length > 0) {
+        renderProducts(saleProducts, 'sale-card-list', saleIndex);
+    } else {
+        console.warn('No sale products loaded yet for On Sale slider.');
+        displayError('sale-error-message', 'No sale products available to display.');
+    }
+
+    const nextButton = document.getElementById('sale-next-button');
+    const prevButton = document.getElementById('sale-prev-button');
+
+    if (nextButton && prevButton) {
+        nextButton.addEventListener('click', () => {
+            const visibleItems = Math.floor(document.getElementById('sale-card-list').offsetWidth / 315);
+            if (saleIndex < saleProducts.length - visibleItems) {
+                saleIndex += 1;
+                renderProducts(saleProducts, 'sale-card-list', saleIndex);
+            }
+        });
+
+        prevButton.addEventListener('click', () => {
+            if (saleIndex > 0) {
+                saleIndex -= 1;
+                renderProducts(saleProducts, 'sale-card-list', saleIndex);
+            }
+        });
+    }
+}
+function updateCartCount() {
+    const cartCount = document.getElementById('cart-count');
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    const userCarts = JSON.parse(localStorage.getItem('userCarts') || '{}');
+    const userCartItems = userCarts[loggedInUser] || [];
+
+    let totalItems = 0;
+    for (const item of userCartItems) {
+        totalItems += item.quantity;
+    }
+
+    cartCount.textContent = totalItems;
+}
 function updateUserUI() {
     const loggedInUser = localStorage.getItem('loggedInUser');
     const signupMessage = document.getElementById('signup-message');
@@ -172,14 +223,13 @@ function updateUserUI() {
         userIconLink.href = "../LoginandRegister.html";
         userIconLink.onclick = null;
     }
+    updateCartCount();
 }
-
 
 function getStarRating(rating) {
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 >= 0.5;
     let stars = '';
-
     for (let i = 0; i < fullStars; i++) {
         stars += '<i class="fas fa-star"></i>';
     }
@@ -188,7 +238,132 @@ function getStarRating(rating) {
     }
     return stars;
 }
-document.addEventListener('DOMContentLoaded', function() {
-    initSlider();
-    updateUserUI();
+
+function filter(brand) {
+    return products.filter(product => product.Brand === brand);
+}
+
+function displayProducts(brand) {
+    const brandProducts = document.getElementById('brandProductsSection');
+    if (!brandProducts) {
+        console.error('Brand products section not found');
+        return;
+    }
+
+    brandProducts.innerHTML = '';
+    const filteredProducts = filter(brand);
+
+    if (filteredProducts.length === 0) {
+        console.warn(`No products found for brand: ${brand}`);
+        displayError('error-message', `No products available for ${brand}.`);
+        return;
+    }
+
+    filteredProducts.forEach((product) => {
+        const productCard = `
+            <div class='card-link' onclick='showProductDetails(${product.ID})'>
+                <img src="../${product.Image || 'Assets/Img/Default.webp'}" alt="${product.Name}" class="card-image" onerror="this.src='../Assets/Img/Default.webp';">
+                <h5 class="item-name">${product.Name}</h5>
+                <h5 class="item-price">$${product.Price ? product.Price.toFixed(2) : 'N/A'}</h5>
+                <div class="product-rating">
+                    ${getStarRating(product.Ratings)}
+                    <span class="rating-number">${product.Ratings}</span>
+                </div>
+            </div>
+        `;
+        brandProducts.innerHTML += productCard;
+    });
+}
+
+function selectBrand(element, brand) {
+    document.querySelectorAll('.brand-link').forEach(link => {
+        link.classList.remove('selected');
+    });
+    element.classList.add('selected');
+    displayProducts(brand);
+}
+
+ 
+ function debounce(func, wait) {
+    let timeout;
+    return function (...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
+    };
+}
+
+ function handleSearch() {
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
+
+    if (!searchInput || !searchResults) {
+        console.error('Search input or results container not found');
+        return;
+    }
+
+    searchInput.addEventListener('input', debounce(function () {
+        const query = searchInput.value.trim().toLowerCase();
+        searchResults.innerHTML = '';
+
+        if (query.length === 0) {
+            searchResults.classList.remove('show');
+            return;
+        }
+
+        // Filter products by name or brand
+        const filteredProducts = products.filter(product =>
+            product.Name.toLowerCase().includes(query) ||
+            product.Brand.toLowerCase().includes(query)
+        );
+
+        if (filteredProducts.length > 0) {
+            filteredProducts.forEach(product => {
+                const resultItem = document.createElement('div');
+                resultItem.className = 'result-item';
+                resultItem.innerHTML = `
+                    <img src="../${product.Image || 'Assets/Img/Default.webp'}" alt="${product.Name}" onerror="this.src='../Assets/Img/Default.webp';">
+                    <div class="result-details">
+                        <h5 class="item-name">${product.Name}</h5>
+                        <h5 class="item-price">$${product.Price ? product.Price.toFixed(2) : 'N/A'}</h5>
+                        <div class="product-rating">
+                            ${getStarRating(product.Ratings)}
+                            <span class="rating-number">${product.Ratings}</span>
+                        </div>
+                    </div>
+                `;
+                resultItem.addEventListener('click', () => {
+                    showProductDetails(product.ID);
+                    searchResults.innerHTML = '';
+                    searchResults.classList.remove('show');
+                    searchInput.value = '';
+                });
+                searchResults.appendChild(resultItem);
+            });
+            searchResults.classList.add('show');
+        } else {
+            const noResults = document.createElement('div');
+            noResults.className = 'no-results';
+            noResults.textContent = 'No products found';
+            searchResults.appendChild(noResults);
+            searchResults.classList.add('show');
+        }
+    }, 300));
+
+     document.addEventListener('click', function (event) {
+        if (!searchInput.contains(event.target) && !searchResults.contains(event.target)) {
+            searchResults.innerHTML = '';
+            searchResults.classList.remove('show');
+        }
+    });
+}
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    fetchProducts(function (loadedProducts) {
+        products = loadedProducts;
+        initSlider();
+        initSaleSlider();
+        updateUserUI();
+        handleSearch();
+     });
 });
