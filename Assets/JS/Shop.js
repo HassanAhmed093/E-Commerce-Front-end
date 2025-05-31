@@ -41,7 +41,7 @@ function displayProducts() {
         const productCard = `
             <div class="product-card" onclick="showProductDetails(${product.ID})" style="animation-delay: ${index * 0.1}s">
                 <div class="product-image">
-                    <img src="../assets/Img/"+${product.Image} alt="${product.Name}"
+                    <img src=${product.Image} alt="${product.Name}"
                          onload="this.style.opacity='1'"
                          style="opacity: 0; transition: opacity 0.5s;">
                 </div>
