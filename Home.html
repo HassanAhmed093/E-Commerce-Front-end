@@ -12,7 +12,7 @@
 </head>
 
 <body>
-  <header>
+ <header>
     <div class="sign-up">
       <span id="signup-message">
         Sign up and get 20% off your first order. <a href="LoginandRegister.html?form=register">Sign Up Now</a>
@@ -25,14 +25,19 @@
         <span>SHOP.CO</span>
       </div>
       <div class="nav-links">
-        <span>Shop</span>
-        <span>On Sale</span>
-        <span>New Arrivals</span>
-        <span>Brands</span>
+      <span onclick="window.location.href='Shop.html'">Shop</span>
+        <span onclick="document.getElementById('OnSale').scrollIntoView({behavior: 'smooth'})">On Sale</span>
+        <span onclick="document.getElementById('NewArrivals').scrollIntoView({behavior: 'smooth'})">New Arrivals</span>
+        <span onclick="document.getElementById('Brands').scrollIntoView({behavior: 'smooth'})">Brands</span>
       </div>
-      <div class="search-bar">
+ 
+      
+    
+      <div class="search-container">
         <i class="fa fa-search search-icon"></i>
-        <input type="text" placeholder="Search for products..." />
+        <input type="text"  id="searchInput" placeholder="Search for products..." />
+        <div id="searchResults" class="search-results"></div>
+   
       </div>
       <div class="user-actions">
          <a href="./cart.html"><i class="fas fa-shopping-cart"></i><span id="cart-count">0</span></a>
@@ -43,6 +48,7 @@
     </nav>
   </header>
 
+
   <section class="hero-section">
     <div class="hero-content">
       <h1>FIND CLOTHES<br>THAT MATCHES<br>YOUR STYLE</h1>
@@ -50,7 +56,7 @@
         Browse through our diverse range of meticulously crafted garments, designed<br>
         to bring out your individuality and cater to your sense of style.
       </p>
-      <button class="shop-now">Shop Now</button>
+      <button class="shop-now" onclick="window.location.href='Shop.html'">Shop Now</button>
 
       <div class="hero-stats">
         <div>
@@ -74,15 +80,28 @@
     </div>
   </section>
 
-  <section class="brands-section">
-    <span>VERSACE</span>
-    <span>ZARA</span>
-    <span>GUCCI</span>
-    <span>PRADA</span>
-    <span>Calvin Klein</span>
-  </section>
+  <section id="Brands" >
+   <div class="brands-section">
+        <span onclick="selectBrand(this, 'VERSACE')" class="brand-link">VERSACE</span> 
+        <span onclick="selectBrand(this, 'ZARA')" class="brand-link">ZARA</span>
+        <span onclick="selectBrand(this, 'GUCCI')" class="brand-link">GUCCI</span>
+        <span onclick="selectBrand(this, 'PRADA')" class="brand-link">PRADA</span>
+        <span onclick="selectBrand(this, 'Calvin Klein')" class="brand-link">Calvin Klein</span>
+    </div> 
+    <div id="brandProductsSection" class="brand-products">
+    </div>
+ <div id="brandProductsSection" class="brand-products">
 
-  <section class="new-arrivals">
+ </div>
+</section>
+  
+
+
+
+
+
+
+  <section id="NewArrivals" class="new-arrivals">
     <h1 class="new-arrivals-text">NEW ARRIVALS</h1>
 
     <div class="cards-container">
@@ -96,6 +115,21 @@
       <div class="error-message" id="error-message" style="display: none;"></div>
     </div>
   </section>
+
+ 
+  <section id="OnSale" class="on-sale">
+    <h1 class="on-sale-text">ON SALE</h1>
+    <div class="cards-container">
+      <ul class="card-list" id="sale-card-list"></ul>
+      <div class="slider-controls">
+        <button class="slider-button" id="sale-prev-button" disabled>←</button>
+        <button class="slider-button" id="sale-next-button">→</button>
+      </div>
+      <div class="error-message" id="sale-error-message" style="display: none;"></div>
+    </div>
+  </section>
+
+
 
   <footer class="footer">
     <div class="footer-content">
