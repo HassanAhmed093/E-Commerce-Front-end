@@ -78,7 +78,6 @@
    font-size: 16px;
    line-height: 100%;
    letter-spacing: 0%;
-
    color: rgba(0, 0, 0, 1);
 
  }
@@ -123,15 +122,13 @@
 
  .user-actions {
    display: flex;
-   width: 62px;
+   width: 90px;
    height: 24px;
-
    gap: 14px;
-
-
  }
-
-
+ .user-actions a {
+    text-decoration: none;
+}
 
  /* Hero Section :  */
  .hero-section {

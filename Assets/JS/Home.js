@@ -144,7 +144,19 @@ function initSlider() {
         }
     });
 }
+function updateCartCount() {
+    const cartCount = document.getElementById('cart-count');
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    const userCarts = JSON.parse(localStorage.getItem('userCarts') || '{}');
+    const userCartItems = userCarts[loggedInUser] || [];
 
+    let totalItems = 0;
+    for (const item of userCartItems) {
+        totalItems += item.quantity;
+    }
+
+    cartCount.textContent = totalItems;
+}
 function updateUserUI() {
     const loggedInUser = localStorage.getItem('loggedInUser');
     const signupMessage = document.getElementById('signup-message');
@@ -172,6 +184,7 @@ function updateUserUI() {
         userIconLink.href = "../LoginandRegister.html";
         userIconLink.onclick = null;
     }
+    updateCartCount();
 }
 
 

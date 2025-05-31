@@ -1,0 +1,37 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+    background-color: white;
+}
+
+.order-details {
+    background: wheat;
+    padding: 15px;
+    border-radius: 10px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.order-item {
+    text-align: left;
+    margin: 10px 0;
+}
+
+.order-item p {
+    margin: 5px 0;
+}
+
+.close-btn {
+    background-color: lightslategray;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+    margin-top: 15px;
+    border: none;
+}
+
+.close-btn:hover {
+    background-color: darkslategrey;
+}

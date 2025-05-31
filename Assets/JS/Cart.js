@@ -7,20 +7,34 @@ const checkoutBtn = document.getElementById('checkout-btn');
 let cartItems = [];
 
 
+function updateCartCount() {
+    const cartCount = document.getElementById('cart-count');
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    const userCarts = JSON.parse(localStorage.getItem('userCarts') || '{}');
+    const userCartItems = userCarts[loggedInUser] || [];
+
+    let totalItems = 0;
+    for (const item of userCartItems) {
+        totalItems += item.quantity;
+    }
+
+    cartCount.textContent = totalItems;
+}
+
 xmark.addEventListener("click", function () {
     document.getElementsByClassName('sign-up')[0].style.display = 'none';
 });
-checkoutBtn.addEventListener('click', createOrder);
-
+checkoutBtn.addEventListener("click",createOrder);
 function loadCartItems() {
     const loggedInUser = localStorage.getItem('loggedInUser');
     if (!loggedInUser) {
         cartItemsContainer.innerHTML = 'Please log in to view your cart';
+        updateCartCount();
         return;
     }
 
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', 'Assets/Json/products.json', true);
+    xhr.open('GET', './Assets/Json/products.json', true);
     xhr.send();
     xhr.onreadystatechange = function () {
         console.log('XMLHttpRequest state:', xhr.readyState, 'Status:', xhr.status);
@@ -35,11 +49,11 @@ function loadCartItems() {
 
             if (cartItems.length === 0) {
                 cartItemsContainer.innerHTML = 'No items in cart';
-                return;
+            } else {
+                displayCartItems();
             }
-
-            displayCartItems();
             updateTotal();
+            updateCartCount();
         }
     };
 }
@@ -71,6 +85,7 @@ function displayCartItems() {
                 updateUserCart();
                 cartItem.querySelector('.quantity').textContent = item.quantity;
                 updateTotal();
+                updateCartCount();
             }
         });
 
@@ -80,6 +95,7 @@ function displayCartItems() {
                 updateUserCart();
                 cartItem.querySelector('.quantity').textContent = item.quantity;
                 updateTotal();
+                updateCartCount();
             } else {
                 alert('Cannot add more items; stock limit reached.');
             }
@@ -90,6 +106,7 @@ function displayCartItems() {
             updateUserCart();
             displayCartItems();
             updateTotal();
+            updateCartCount();
         });
 
         cartItemsContainer.appendChild(cartItem);
@@ -134,8 +151,9 @@ function createOrder() {
     const discount = subtotal * 0.1;
     const deliveryFee = 15;
     const total = subtotal - discount + deliveryFee;
-    let userOrders = JSON.parse(localStorage.getItem('userOrders'));
-    const userOrderCount = (userOrders[loggedInUser]).length;
+
+    let userOrders = JSON.parse(localStorage.getItem('userOrders')) || {};
+    const userOrderCount = (userOrders[loggedInUser] || []).length;
     const orderId = userOrderCount + 1;
 
     const order = {
@@ -147,7 +165,7 @@ function createOrder() {
             quantity: item.quantity,
             Price: item.Price
         })),
-        total: `$${total.toFixed(2)}`
+        total: total
     };
 
     if (!userOrders[loggedInUser]) {
@@ -163,7 +181,8 @@ function createOrder() {
 
     const params = new URLSearchParams({
         orderId: order.orderId,
-        total: order.total
+        total: order.total,
+        items: JSON.stringify(order.items)
     }).toString();
 
     window.open(
@@ -177,11 +196,10 @@ function createOrder() {
     localStorage.setItem('userCarts', JSON.stringify(userCarts));
     cartItems = [];
 
-
     displayCartItems();
     updateTotal();
+    updateCartCount();
     cartItemsContainer.innerHTML = 'Order placed successfully! Your cart is now empty.';
-    console.log('Cart cleared after checkout.');
 }
 
 function updateUserUI() {
@@ -207,10 +225,12 @@ function updateUserUI() {
             };
         }
     } else {
-        signupMessage.innerHTML = 'Sign up and get 20% off your first order. <a href="../LoginandRegister.html?form=register">Sign Up Now</a>';
+        signupMessage.innerHTML = 
+        'Sign up and get 20% off your first order. <a href="../LoginandRegister.html?form=register">Sign Up Now</a>';
         userIconLink.href = "../LoginandRegister.html";
         userIconLink.onclick = null;
     }
+    updateCartCount();
 }
 
 document.addEventListener('DOMContentLoaded', function () {
