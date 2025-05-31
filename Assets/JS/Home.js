@@ -1,7 +1,10 @@
 let products = [];
 let newArrivalsIndex = 0;
 let saleIndex = 0;
-
+const xmark = document.getElementById('xmark');
+xmark.addEventListener("click", function () {
+    document.getElementsByClassName('sign-up')[0].style.display = 'none';
+});
 function fetchProducts(callback) {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', 'Assets/Json/products.json', true);
