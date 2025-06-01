@@ -19,6 +19,18 @@ function fetchProducts() {
         if (xhr.status === 200) {
             products = JSON.parse(xhr.responseText);
             filteredProducts = [...products];
+            
+            const selectedBrand = localStorage.getItem('selectedBrand');
+            if (selectedBrand) {
+                const brandCheckbox = document.querySelector(`.brands-list input[value="${selectedBrand}"]`);
+                if (brandCheckbox) {
+                    brandCheckbox.checked = true;
+                    applyFilters();
+                
+                }
+                localStorage.removeItem('selectedBrand');
+            }
+            
             displayProducts();
             setupEventListeners();
             setLoadingState(false);
@@ -94,7 +106,6 @@ function getStarRating(rating) {
     return stars;
 }
 
-// Add this to setupEventListeners function
 function setupEventListeners() {
     document.querySelectorAll('.categories-list input').forEach(checkbox => {
         checkbox.addEventListener('change', applyFilters);

@@ -239,51 +239,6 @@ function getStarRating(rating) {
     return stars;
 }
 
-function filter(brand) {
-    return products.filter(product => product.Brand === brand);
-}
-
-function displayProducts(brand) {
-    const brandProducts = document.getElementById('brandProductsSection');
-    if (!brandProducts) {
-        console.error('Brand products section not found');
-        return;
-    }
-
-    brandProducts.innerHTML = '';
-    const filteredProducts = filter(brand);
-
-    if (filteredProducts.length === 0) {
-        console.warn(`No products found for brand: ${brand}`);
-        displayError('error-message', `No products available for ${brand}.`);
-        return;
-    }
-
-    filteredProducts.forEach((product) => {
-        const productCard = `
-            <div class='card-link' onclick='showProductDetails(${product.ID})'>
-                <img src="${product.Image }" alt="${product.Name}" class="card-image" onerror="this.src='../Assets/Img/Default.webp';">
-                <h5 class="item-name">${product.Name}</h5>
-                <h5 class="item-price">$${product.Price ? product.Price.toFixed(2) : 'N/A'}</h5>
-                <div class="product-rating">
-                    ${getStarRating(product.Ratings)}
-                    <span class="rating-number">${product.Ratings}</span>
-                </div>
-            </div>
-        `;
-        brandProducts.innerHTML += productCard;
-    });
-}
-
-function selectBrand(element, brand) {
-    document.querySelectorAll('.brand-link').forEach(link => {
-        link.classList.remove('selected');
-    });
-    element.classList.add('selected');
-    displayProducts(brand);
-}
-
- 
  function debounce(func, wait) {
     let timeout;
     return function (...args) {
@@ -366,3 +321,10 @@ document.addEventListener('DOMContentLoaded', function () {
         handleSearch();
      });
 });
+
+
+
+function selectBrand(element, brandName) {
+    localStorage.setItem('selectedBrand', brandName);
+    window.location.href = 'Shop.html';
+}
