@@ -39,9 +39,9 @@ function displayProducts() {
 
     filteredProducts.forEach((product, index) => {
         const productCard = `
-            <div class="product-card" onclick="showProductDetails(${product.ID})" style="animation-delay: ${index * 0.1}s">
+            <div class="product-card"  style="animation-delay: ${index * 0.1}s">
                 <div class="product-image">
-                    <img src=${product.Image} alt="${product.Name}"
+                    <img onclick="showProductDetails(${product.ID})" src=${product.Image} alt="${product.Name}"
                          onload="this.style.opacity='1'"
                          style="opacity: 0; transition: opacity 0.5s;">
                 </div>
@@ -94,6 +94,7 @@ function getStarRating(rating) {
     return stars;
 }
 
+// Add this to setupEventListeners function
 function setupEventListeners() {
     document.querySelectorAll('.categories-list input').forEach(checkbox => {
         checkbox.addEventListener('change', applyFilters);
@@ -107,11 +108,17 @@ function setupEventListeners() {
         radio.addEventListener('change', applyFilters);
     });
 
-    document.getElementById('sortSelect').addEventListener('change', applyFilters);
+    document.querySelectorAll('.brands-list input').forEach(checkbox => {
+        checkbox.addEventListener('change', applyFilters);
+    });
 }
 
+// Update the applyFilters function
 function applyFilters() {
     const selectedCategories = Array.from(document.querySelectorAll('.categories-list input:checked'))
+        .map(checkbox => checkbox.value);
+    
+    const selectedBrands = Array.from(document.querySelectorAll('.brands-list input:checked'))
         .map(checkbox => checkbox.value);
 
     const minPrice = parseFloat(document.getElementById('minPrice').value) || 0;
@@ -122,10 +129,12 @@ function applyFilters() {
     filteredProducts = products.filter(product => {
         const matchesCategory = selectedCategories.length === 0 || 
             selectedCategories.includes(product.Categories);
+        const matchesBrand = selectedBrands.length === 0 || 
+            selectedBrands.includes(product.Brand);
         const matchesPrice = product.Price >= minPrice && product.Price <= maxPrice;
         const matchesRating = product.Ratings >= selectedRating;
 
-        return matchesCategory && matchesPrice && matchesRating;
+        return matchesCategory && matchesBrand && matchesPrice && matchesRating;
     });
 
     const sortMethod = document.getElementById('sortSelect').value;
@@ -194,5 +203,127 @@ function addToCart(productId) {
         button.style.transform = 'scale(1)';
     }, 2000);
 }
+function updateCartCount() {
+    const cartCount = document.getElementById('cart-count');
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    const userCarts = JSON.parse(localStorage.getItem('userCarts') || '{}');
+    const userCartItems = userCarts[loggedInUser] || [];
+
+    let totalItems = 0;
+    for (const item of userCartItems) {
+        totalItems += item.quantity;
+    }
+
+    cartCount.textContent = totalItems;
+}
+
+function updateUserUI() {
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    const signupMessage = document.getElementById('signup-message');
+    const userIconLink = document.getElementById('user-icon');
+
+    if (loggedInUser) {
+        signupMessage.innerHTML = `Welcome back, ${loggedInUser}! <a href="#" id="logout-link">Logout</a>`;
+        userIconLink.href = "#";
+        userIconLink.onclick = (e) => {
+            e.preventDefault();
+            alert(`You are already logged in as ${loggedInUser}`);
+        };
+
+        const logoutLink = document.getElementById('logout-link');
+        if (logoutLink) {
+            logoutLink.onclick = (e) => {
+                e.preventDefault();
+                localStorage.removeItem('loggedInUser');
+                updateUserUI();
+                window.location.reload();
+            };
+        }
+    } else {
+        signupMessage.innerHTML = 'Sign up and get 20% off your first order. <a href="../LoginandRegister.html?form=register">Sign Up Now</a>';
+        userIconLink.href = "../LoginandRegister.html";
+        userIconLink.onclick = null;
+    }
+    updateCartCount();
+}
+function debounce(func, wait) {
+    let timeout;
+    return function(...args) {
+        const later = () => {
+            timeout = null;
+            func.apply(this, args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+function handleSearch() {
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
+
+    if (!searchInput || !searchResults) {
+        console.error('Search input or results container not found');
+        return;
+    }
+
+    searchInput.addEventListener('input', debounce(function () {
+        const query = searchInput.value.trim().toLowerCase();
+        searchResults.innerHTML = '';
+
+        if (query.length === 0) {
+            searchResults.classList.remove('show');
+            return;
+        }
+
+        const filteredProducts = products.filter(product =>
+            product.Name.toLowerCase().includes(query) ||
+            product.Brand.toLowerCase().includes(query)
+        );
+
+        if (filteredProducts.length > 0) {
+            filteredProducts.forEach(product => {
+                const resultItem = document.createElement('div');
+                resultItem.className = 'result-item';
+                resultItem.innerHTML = `
+                    <img src="../${product.Image || 'Assets/Img/Default.webp'}" alt="${product.Name}" onerror="this.src='../Assets/Img/Default.webp';">
+                    <div class="result-details">
+                        <h5 class="item-name">${product.Name}</h5>
+                        <h5 class="item-price">$${product.Price ? product.Price.toFixed(2) : 'N/A'}</h5>
+                        <div class="product-rating">
+                            ${getStarRating(product.Ratings)}
+                            <span class="rating-number">${product.Ratings}</span>
+                        </div>
+                    </div>
+                `;
+                resultItem.addEventListener('click', () => {
+                    showProductDetails(product.ID);
+                    searchResults.innerHTML = '';
+                    searchResults.classList.remove('show');
+                    searchInput.value = '';
+                });
+                searchResults.appendChild(resultItem);
+            });
+            searchResults.classList.add('show');
+        } else {
+            const noResults = document.createElement('div');
+            noResults.className = 'no-results';
+            noResults.textContent = 'No products found';
+            searchResults.appendChild(noResults);
+            searchResults.classList.add('show');
+        }
+    }, 300));
+
+    document.addEventListener('click', function (event) {
+        if (!searchInput.contains(event.target) && !searchResults.contains(event.target)) {
+            searchResults.innerHTML = '';
+            searchResults.classList.remove('show');
+        }
+    });
+}
+
+handleSearch();
 
 fetchProducts();
+
+updateUserUI();

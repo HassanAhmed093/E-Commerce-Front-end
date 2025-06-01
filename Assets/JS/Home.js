@@ -69,7 +69,7 @@ function renderProducts(productsToRender, cardListId, currentIndex) {
             li.className = 'card-item';
             li.innerHTML = `
                 <div class='card-link' onclick='showProductDetails(${product.ID})'>
-                    <img src="../${product.Image || 'Assets/Img/Default.webp'}" alt="${product.Name}" class="card-image" onerror="this.src='../Assets/Img/Default.webp';">
+                    <img src="${product.Image}" alt="${product.Name}" class="card-image" onerror="this.src='../Assets/Img/Default.webp';">
                     <h5 class="item-name">${product.Name}</h5>
                     <h5 class="item-price">$${product.Price ? product.Price.toFixed(2) : 'N/A'}</h5>
                     <div class="product-rating">
@@ -262,7 +262,7 @@ function displayProducts(brand) {
     filteredProducts.forEach((product) => {
         const productCard = `
             <div class='card-link' onclick='showProductDetails(${product.ID})'>
-                <img src="../${product.Image || 'Assets/Img/Default.webp'}" alt="${product.Name}" class="card-image" onerror="this.src='../Assets/Img/Default.webp';">
+                <img src="${product.Image }" alt="${product.Name}" class="card-image" onerror="this.src='../Assets/Img/Default.webp';">
                 <h5 class="item-name">${product.Name}</h5>
                 <h5 class="item-price">$${product.Price ? product.Price.toFixed(2) : 'N/A'}</h5>
                 <div class="product-rating">
@@ -310,7 +310,6 @@ function selectBrand(element, brand) {
             return;
         }
 
-        // Filter products by name or brand
         const filteredProducts = products.filter(product =>
             product.Name.toLowerCase().includes(query) ||
             product.Brand.toLowerCase().includes(query)
@@ -321,7 +320,7 @@ function selectBrand(element, brand) {
                 const resultItem = document.createElement('div');
                 resultItem.className = 'result-item';
                 resultItem.innerHTML = `
-                    <img src="../${product.Image || 'Assets/Img/Default.webp'}" alt="${product.Name}" onerror="this.src='../Assets/Img/Default.webp';">
+                    <img src=${product.Image} alt="${product.Name}" onerror="this.src='../Assets/Img/Default.webp';">
                     <div class="result-details">
                         <h5 class="item-name">${product.Name}</h5>
                         <h5 class="item-price">$${product.Price ? product.Price.toFixed(2) : 'N/A'}</h5>

@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function displayProductDetails(product) {
-    document.getElementById('mainImage').src = product.image;
+    document.getElementById('mainImage').src = product.Image;
     document.getElementById('productName').textContent = product.Name;
     document.getElementById('productDetails').textContent = product.Details;
     document.getElementById('ratingNumber').textContent = product.Ratings.toFixed(1);
