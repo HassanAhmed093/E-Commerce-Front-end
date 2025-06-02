@@ -178,14 +178,14 @@ function createOrder() {
     const orderPanel = document.getElementById('order-panel');
     const orderIdElement = document.getElementById('order-id');
     const orderTotalElement = document.getElementById('order-total');
-    const orderSubtotalElement = document.getElementById('order-subtotal'); // Updated id
-    const orderDiscountElement = document.getElementById('order-discount'); // Updated id
+    const orderSubtotalElement = document.getElementById('order-subtotal'); 
+    const orderDiscountElement = document.getElementById('order-discount'); 
     const orderItemsContainer = document.getElementById('order-items');
 
     orderIdElement.textContent = orderId;
     orderTotalElement.textContent = `$${total.toFixed(2)}`;
-    orderSubtotalElement.textContent = `$${subtotal.toFixed(2)}`; // Updated target
-    orderDiscountElement.textContent = `-$${discount.toFixed(2)}`; // Updated target
+    orderSubtotalElement.textContent = `$${subtotal.toFixed(2)}`; 
+    orderDiscountElement.textContent = `-$${discount.toFixed(2)}`; 
 
     orderItemsContainer.innerHTML = '';
     order.items.forEach((item, index) => {
