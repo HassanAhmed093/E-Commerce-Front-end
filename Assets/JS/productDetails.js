@@ -6,7 +6,15 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = 'Shop.html';
     }
 });
-
+function showToast(message) {
+    const toast = document.getElementById("toast");
+    toast.textContent = message;
+    toast.classList.add("show");
+    setTimeout(() => {
+      toast.classList.remove("show");
+    }, 3000);
+  }
+  
 function displayProductDetails(product) {
     document.getElementById('mainImage').src = product.Image;
     document.getElementById('productName').textContent = product.Name;
@@ -51,7 +59,7 @@ function updateQuantity(change) {
 function addToCartFromDetails() {
     const loggedInUser = localStorage.getItem('loggedInUser');
     if (!loggedInUser) {
-        alert('Please log in to add items to your cart.');
+        showToast('Please log in to add items to your cart.');
         window.location.href = 'LoginandRegister.html';
         return;
     }
@@ -60,12 +68,12 @@ function addToCartFromDetails() {
     const product = JSON.parse(localStorage.getItem('selectedProduct'));
     
     if (quantity <= 0) {
-        alert('Please select a valid quantity.');
+        showToast('Please select a valid quantity.');
         return;
     }
 
     if (quantity > product.UnitsInStock) {
-        alert(`Cannot add ${quantity} items; only ${product.UnitsInStock} units in stock.`);
+        showToast(`Cannot add ${quantity} items; only ${product.UnitsInStock} units in stock.`);
         return;
     }
 
@@ -79,7 +87,7 @@ function addToCartFromDetails() {
         if (existingItem.quantity + quantity <= product.UnitsInStock) {
             existingItem.quantity += quantity;
         } else {
-            alert('Cannot add more items; stock limit reached.');
+            showToast('Cannot add more items; stock limit reached.');
             return;
         }
     } else {

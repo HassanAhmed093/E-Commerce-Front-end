@@ -10,6 +10,27 @@ function setLoadingState(loading) {
     }
 }
 
+// Add this function after fetchProducts()
+function getUniqueCategories() {
+    const categories = new Set();
+    products.forEach(product => {
+        if (product.Categories) {
+            categories.add(product.Categories);
+        }
+    });
+    return Array.from(categories);
+}
+
+function populateCategories() {
+    const categoriesList = document.querySelector('.categories-list');
+    const uniqueCategories = getUniqueCategories();
+    
+    categoriesList.innerHTML = uniqueCategories.map(category => `
+        <label><input type="checkbox" value="${category}"> ${category}</label>
+    `).join('');
+}
+
+// Modify fetchProducts() to include category population
 function fetchProducts() {
     setLoadingState(true);
     const xhr = new XMLHttpRequest();
@@ -20,15 +41,32 @@ function fetchProducts() {
             products = JSON.parse(xhr.responseText);
             filteredProducts = [...products];
             
+            // Check for selected brand
             const selectedBrand = localStorage.getItem('selectedBrand');
             if (selectedBrand) {
                 const brandCheckbox = document.querySelector(`.brands-list input[value="${selectedBrand}"]`);
                 if (brandCheckbox) {
                     brandCheckbox.checked = true;
-                    applyFilters();
-                
                 }
                 localStorage.removeItem('selectedBrand');
+            }
+
+            // Check for selected category
+            const selectedCategory = localStorage.getItem('selectedCategory');
+            if (selectedCategory) {
+                const categoryCheckbox = document.querySelector(`.categories-list input[value="${selectedCategory}"]`);
+                if (categoryCheckbox) {
+                    categoryCheckbox.checked = true;
+                }
+                localStorage.removeItem('selectedCategory');
+            }
+
+            // Populate categories
+            populateCategories();
+
+            // Apply filters if either brand or category is selected
+            if (selectedBrand || selectedCategory) {
+                applyFilters();
             }
             
             displayProducts();
@@ -302,7 +340,7 @@ function handleSearch() {
                 const resultItem = document.createElement('div');
                 resultItem.className = 'result-item';
                 resultItem.innerHTML = `
-                    <img src="../${product.Image || 'Assets/Img/Default.webp'}" alt="${product.Name}" onerror="this.src='../Assets/Img/Default.webp';">
+                    <img src="${product.Image }" alt="${product.Name}" onerror="this.src='../Assets/Img/Default.webp';">
                     <div class="result-details">
                         <h5 class="item-name">${product.Name}</h5>
                         <h5 class="item-price">$${product.Price ? product.Price.toFixed(2) : 'N/A'}</h5>

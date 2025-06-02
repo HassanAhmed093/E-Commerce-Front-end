@@ -7,6 +7,15 @@ const checkoutBtn = document.getElementById('checkout-btn');
 let cartItems = [];
 
 
+function showToast(message) {
+    const toast = document.getElementById("toast");
+    toast.textContent = message;
+    toast.classList.add("show");
+    setTimeout(() => {
+      toast.classList.remove("show");
+    }, 3000);
+  }
+  
 function updateCartCount() {
     const cartCount = document.getElementById('cart-count');
     const loggedInUser = localStorage.getItem('loggedInUser');
@@ -97,7 +106,7 @@ function displayCartItems() {
                 updateTotal();
                 updateCartCount();
             } else {
-                alert('Cannot add more items; stock limit reached.');
+                showToast("Cannot add more items; stock limit reached.");
             }
         });
 
@@ -140,7 +149,7 @@ function updateTotal() {
 function createOrder() {
     const loggedInUser = localStorage.getItem('loggedInUser');
     if (!loggedInUser || cartItems.length === 0) {
-        alert('No items to checkout or user not logged in.');
+        showToast('No items to checkout or user not logged in.');
         return;
     }
 
@@ -233,7 +242,7 @@ function updateUserUI() {
         userIconLink.href = "#";
         userIconLink.onclick = (e) => {
             e.preventDefault();
-            alert(`You are already logged in as ${loggedInUser}`);
+            showtoast(`You are already logged in as ${loggedInUser}`);
         };
 
         const logoutLink = document.getElementById('logout-link');

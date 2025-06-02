@@ -77,6 +77,7 @@
     </div>
 
     <div class="hero-image">
+      <img src="Assets/Img/hero.png" alt="" srcset="">
     </div>
   </section>
 
@@ -115,6 +116,69 @@
   </section>
 
  
+
+<!-- Replace the existing Categories section with this -->
+<section id="Categories" class="categories-showcase">
+  <h2 class="section-title">BROWSE BY CATEGORY</h2>
+  <div class="categories-grid">
+      <div class="category-card" onclick="selectCategory(this, 'T-Shirts')">
+          <div class="category-image">
+              <img src="https://media.gettyimages.com/id/1490616593/photo/portrait-of-pleased-young-man.jpg?s=612x612&w=0&k=20&c=rKLj2WrKwZIo9_3DJksAbMXBp5yJuX0ybMe35nLg8rU=" alt="T-Shirts">
+          </div>
+          <h3>T-Shirts</h3>
+          <p>Classic comfort meets modern style</p>
+      </div>
+      <div class="category-card" onclick="selectCategory(this, 'Outerwear')">
+          <div class="category-image">
+              <img src="https://media.gettyimages.com/id/1288189469/photo/one-handosme-man-dressed-in-warm-winter-clothing-walking-outdoors-in-the-city.jpg?s=612x612&w=0&k=20&c=HcKQwj_B2VMG8zDTxUuy3vlhYzM5WmsbqS2SkZpkVkk=" alt="Outerwear">
+          </div>
+          <h3>Outerwear</h3>
+          <p>Stay warm in style</p>
+      </div>
+      <div class="category-card" onclick="selectCategory(this, 'Pants')">
+          <div class="category-image">
+              <img src="https://media.gettyimages.com/id/1042695968/photo/legs-of-a-couple-sitting-on-a-wall.jpg?s=612x612&w=0&k=20&c=sPfABQVOlw0o_1LSqRQuqZaL4LScYloBkoeyyJXVdzk=" alt="Pants">
+          </div>
+          <h3>Pants</h3>
+          <p>Comfort meets style in every pair</p>
+      </div>
+      <div class="category-card" onclick="selectCategory(this, 'Accessories')">
+          <div class="category-image">
+              <img src="https://media.gettyimages.com/id/1388579491/photo/unrecognizable-man-puts-his-leather-wallet-into-back-pocket-of-the-jeans.jpg?s=612x612&w=0&k=20&c=PO94FDyB19lFudokRXF1rNBZgU5PwTj6CfUM9RKYmAk=" alt="Accessories">
+          </div>
+          <h3>Accessories</h3>
+          <p>Complete your look</p>
+      </div>
+      <div class="category-card" onclick="selectCategory(this, 'Sweaters')">
+          <div class="category-image">
+              <img src="https://media.gettyimages.com/id/531048139/photo/bearded-man-laughing.jpg?s=612x612&w=0&k=20&c=Vfcx_Mex7wqG1rIzK26hBRDhXVUrPkYg0J6izcD1czc=" alt="Sweaters">
+          </div>
+          <h3>Sweaters</h3>
+          <p>Cozy and stylish knitwear</p>
+      </div>
+      <div class="category-card" onclick="selectCategory(this, 'Shirts')">
+          <div class="category-image">
+              <img src="https://media.gettyimages.com/id/1542566108/photo/young-businessman-smiling-at-camera.jpg?s=612x612&w=0&k=20&c=cDoT9LelcDARm3sxck6UWICgsWjOXtUgXg2Bwdq7XNU=" alt="Shirts">
+          </div>
+          <h3>Shirts</h3>
+          <p>From casual to formal</p>
+      </div>
+      <div class="category-card" onclick="selectCategory(this, 'Blouses')">
+          <div class="category-image">
+              <img src="https://media.gettyimages.com/id/1150295857/photo/portrait-of-a-beautiful-blond-woman-looking-out-of-window.jpg?s=612x612&w=0&k=20&c=_mNNFBcBGvCXIb6IvnM46ngRlhYglrZJpTxOzyIvIkU=" alt="Blouses">
+          </div>
+          <h3>Blouses</h3>
+          <p>Elegant tops for every occasion</p>
+      </div>
+      <div class="category-card" onclick="selectCategory(this, 'Activewear')">
+          <div class="category-image">
+              <img src="https://media.gettyimages.com/id/1125038961/photo/young-man-running-outdoors-in-morning.jpg?s=612x612&w=0&k=20&c=LVAlQIforg7ZRAF-bOvdvoD_k3ejEeimrWbGq2IA5ak=" alt="Activewear">
+          </div>
+          <h3>Activewear</h3>
+          <p>Performance meets fashion</p>
+      </div>
+  </div>
+</section>
   <section id="OnSale" class="on-sale">
     <h1 class="on-sale-text">ON SALE</h1>
     <div class="cards-container">
@@ -195,6 +259,8 @@
         <img src="https://img.icons8.com/color/48/google-pay.png" />
       </div>
     </div>
+    <div id="toast" class="toast"></div>
+
   </footer>
   <script src="Assets/JS/Home.js"></script>
 </body>

@@ -1,6 +1,15 @@
 let products = [];
 let newArrivalsIndex = 0;
 let saleIndex = 0;
+function showToast(message) {
+    const toast = document.getElementById("toast");
+    toast.textContent = message;
+    toast.classList.add("show");
+    setTimeout(() => {
+      toast.classList.remove("show");
+    }, 3000);
+  }
+  
 const xmark = document.getElementById('xmark');
 xmark.addEventListener("click", function () {
     document.getElementsByClassName('sign-up')[0].style.display = 'none';
@@ -206,7 +215,7 @@ function updateUserUI() {
         userIconLink.href = "#";
         userIconLink.onclick = (e) => {
             e.preventDefault();
-            alert(`You are already logged in as ${loggedInUser}`);
+            showToast(`You are already logged in as ${loggedInUser}`);
         };
 
         const logoutLink = document.getElementById('logout-link');
@@ -326,5 +335,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function selectBrand(element, brandName) {
     localStorage.setItem('selectedBrand', brandName);
+    window.location.href = 'Shop.html';
+}
+
+function selectCategory(element, categoryName) {
+    localStorage.setItem('selectedCategory', categoryName);
     window.location.href = 'Shop.html';
 }
