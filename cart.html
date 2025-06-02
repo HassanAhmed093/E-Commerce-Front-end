@@ -23,9 +23,6 @@
       <div class="nav-links">
         <a href="../Home.html">Home</a>
         <a href="../Shop.html">Shop</a>
-        <a href="#">On Sale</a>
-        <a href="#">New Arrivals</a>
-        <a href="#">Brands</a>
       </div>
       <div class="search-bar">
         <i class="fas fa-search"></i>
@@ -67,6 +64,34 @@
     </div>
   </section>
 
+
+<div id="order-panel" class="order-panel">
+  <div class="order-details">
+    <h2>Order Confirmation</h2>
+    <p><strong>Order ID:</strong> <span id="order-id"></span></p>
+    <div id="order-items"></div>
+    <div id="summary">
+      <div class="summary-item">
+        <span>Subtotal:</span>
+        <span id="order-subtotal"></span>
+      </div>
+      <div class="summary-item discount">
+        <span>Discount (10%):</span>
+        <span id="order-discount"></span>
+      </div>
+      <div class="summary-item">
+        <span>Delivery Fee:</span>
+        <span>$15.00</span>
+      </div>
+      <div class="summary-item total">
+        <span>Total:</span>
+        <span id="order-total"></span>
+      </div>
+    </div>
+    <p>Thank you for your order!</p>
+    <button class="close-btn">Close</button>
+  </div>
+</div>
   <script src="./Assets/JS/Cart.js"></script>
 </body>
 

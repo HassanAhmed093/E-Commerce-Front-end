@@ -201,8 +201,13 @@ function addToCart(productId) {
         }
     }
 
+    // Save updated cart to localStorage
     localStorage.setItem('userCarts', JSON.stringify(userCarts));
 
+    // Update cart count immediately
+    updateCartCount();
+
+    // Visual feedback on button
     const button = event.currentTarget;
     button.innerHTML = '<i class="fas fa-check"></i> Added!';
     button.style.background = '#4CAF50';

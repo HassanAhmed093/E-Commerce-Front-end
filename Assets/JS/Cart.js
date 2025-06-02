@@ -65,7 +65,7 @@ function displayCartItems() {
         const cartItem = document.createElement('div');
         cartItem.classList.add('cart-item');
         cartItem.innerHTML = `
-            <img src="https://via.placeholder.com/80x80?text=${item.Name.replace('#', '')}" alt="${item.Name}">
+            <img src="${item.Image}" alt="${item.Name}">
             <div class="item-details">
                 <h3>${item.Name}</h3>
                 <p>${item.Details}</p>
@@ -174,34 +174,55 @@ function createOrder() {
     userOrders[loggedInUser].push(order);
     localStorage.setItem('userOrders', JSON.stringify(userOrders));
 
-    const windowWidth = 400;
-    const windowHeight = 300;
-    const left = (screen.width - windowWidth) / 2;
-    const top = (screen.height - windowHeight) / 2;
+    
+    const orderPanel = document.getElementById('order-panel');
+    const orderIdElement = document.getElementById('order-id');
+    const orderTotalElement = document.getElementById('order-total');
+    const orderSubtotalElement = document.getElementById('order-subtotal'); 
+    const orderDiscountElement = document.getElementById('order-discount'); 
+    const orderItemsContainer = document.getElementById('order-items');
 
-    const params = new URLSearchParams({
-        orderId: order.orderId,
-        total: order.total,
-        items: JSON.stringify(order.items)
-    }).toString();
+    orderIdElement.textContent = orderId;
+    orderTotalElement.textContent = `$${total.toFixed(2)}`;
+    orderSubtotalElement.textContent = `$${subtotal.toFixed(2)}`; 
+    orderDiscountElement.textContent = `-$${discount.toFixed(2)}`; 
 
-    window.open(
-        `order-details.html?${params}`,
-        '_blank',
-        `width=${windowWidth},height=${windowHeight},left=${left},top=${top}`
-    );
+    orderItemsContainer.innerHTML = '';
+    order.items.forEach((item, index) => {
+        const cartItem = cartItems.find(cartItem => cartItem.ID === item.ID);
+        const itemElement = document.createElement('div');
+        itemElement.classList.add('order-item');
+        itemElement.innerHTML = `
+            <div class="order-item-content">
+                <img src="${cartItem.Image } ">
+                <div class="order-item-details">
+                    <p><strong>Product:</strong> ${item.Name}</p>
+                    <p><strong>Quantity:</strong> ${item.quantity}</p>
+                    <p><strong>Price:</strong> $${(item.Price * item.quantity).toFixed(2)}</p>
+                </div>
+            </div> `;
+        orderItemsContainer.appendChild(itemElement);
+    });
 
+    
+    orderPanel.classList.add('active');
+
+ 
     let userCarts = JSON.parse(localStorage.getItem('userCarts')) || {};
     userCarts[loggedInUser] = [];
     localStorage.setItem('userCarts', JSON.stringify(userCarts));
     cartItems = [];
-
     displayCartItems();
     updateTotal();
     updateCartCount();
     cartItemsContainer.innerHTML = 'Order placed successfully! Your cart is now empty.';
-}
 
+    
+    const closeBtn = document.querySelector('.close-btn');
+    closeBtn.addEventListener('click', () => {
+        orderPanel.classList.remove('active');
+    });
+}
 function updateUserUI() {
     const loggedInUser = localStorage.getItem('loggedInUser');
     const signupMessage = document.getElementById('signup-message');
