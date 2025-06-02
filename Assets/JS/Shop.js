@@ -187,7 +187,6 @@ function addToCart(productId) {
         // Validate stock
         if (existingItem.quantity + 1 <= product.UnitsInStock) {
             existingItem.quantity += 1;
-            updateCartCount();
         } else {
             alert('Cannot add more items; stock limit reached.');
             return;
@@ -196,16 +195,19 @@ function addToCart(productId) {
         // Add new item with quantity 1
         if (product.UnitsInStock > 0) {
             userCarts[loggedInUser].push({ ...product, quantity: 1 });
-             updateCartCount();
         } else {
             alert('This product is out of stock.');
             return;
         }
-       
     }
 
+    // Save updated cart to localStorage
     localStorage.setItem('userCarts', JSON.stringify(userCarts));
 
+    // Update cart count immediately
+    updateCartCount();
+
+    // Visual feedback on button
     const button = event.currentTarget;
     button.innerHTML = '<i class="fas fa-check"></i> Added!';
     button.style.background = '#4CAF50';
