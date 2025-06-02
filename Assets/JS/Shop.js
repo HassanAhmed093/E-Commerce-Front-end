@@ -187,6 +187,7 @@ function addToCart(productId) {
         // Validate stock
         if (existingItem.quantity + 1 <= product.UnitsInStock) {
             existingItem.quantity += 1;
+            updateCartCount();
         } else {
             alert('Cannot add more items; stock limit reached.');
             return;
@@ -195,10 +196,12 @@ function addToCart(productId) {
         // Add new item with quantity 1
         if (product.UnitsInStock > 0) {
             userCarts[loggedInUser].push({ ...product, quantity: 1 });
+             updateCartCount();
         } else {
             alert('This product is out of stock.');
             return;
         }
+       
     }
 
     localStorage.setItem('userCarts', JSON.stringify(userCarts));
