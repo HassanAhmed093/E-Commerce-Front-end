@@ -50,10 +50,8 @@ function fetchProducts() {
 
             const selectedCategory = localStorage.getItem('selectedCategory');
             if (selectedCategory) {
-                // First populate the categories
                 populateCategories();
                 
-                // Then find and check the checkbox
                 setTimeout(() => {
                     const categoryCheckbox = document.querySelector(`.categories-list input[value="${selectedCategory}"]`);
                     if (categoryCheckbox) {
@@ -150,7 +148,6 @@ function setupEventListeners() {
         checkbox.addEventListener('change', applyFilters);
     });
 
-    document.getElementById('priceRange').addEventListener('input', applyFilters);
     document.getElementById('minPrice').addEventListener('input', applyFilters);
     document.getElementById('maxPrice').addEventListener('input', applyFilters);
 

@@ -339,19 +339,16 @@ function selectBrand(element, brandName) {
 }
 
 function selectCategory(element, categoryName) {
-    // Highlight the selected category
     const categoryCards = document.querySelectorAll('.category-card');
     categoryCards.forEach(card => {
         card.classList.remove('selected');
     });
     element.classList.add('selected');
     
-    // Store the selected category and redirect
     localStorage.setItem('selectedCategory', categoryName);
     window.location.href = 'Shop.html';
 }
 
-// Add this to the DOMContentLoaded event listener:
 document.addEventListener('DOMContentLoaded', function () {
     fetchProducts(function (loadedProducts) {
         products = loadedProducts;
@@ -360,7 +357,6 @@ document.addEventListener('DOMContentLoaded', function () {
         updateUserUI();
         handleSearch();
         
-        // Highlight category if coming from shop page
         const selectedCategory = localStorage.getItem('selectedCategory');
         if (selectedCategory) {
             const categoryCard = document.querySelector(`.category-card[onclick*="${selectedCategory}"]`);

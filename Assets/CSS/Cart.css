@@ -252,7 +252,6 @@ header {
 .checkout-btn:hover {
     background-color: darkslategrey
 }
-/* Replace the existing .order-panel styles with these */
 .order-panel {
     position: fixed;
     top: 0;
@@ -284,7 +283,6 @@ header {
     margin: 20px 0;
 }
 
-/* Update the cart section to accommodate the sidebar */
 .cart-section {
     max-width: 1000px;
     margin: 20px auto;
@@ -298,7 +296,6 @@ header {
     margin-right: 420px;
 }
 
-/* Make it responsive */
 @media (max-width: 1200px) {
     .order-panel {
         width: 350px;
