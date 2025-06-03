@@ -13,15 +13,16 @@ body {
     display: flex;
     max-width: 1440px;
     margin: 20px auto;
-    gap: 30px;
+    gap: 10px;
     padding: 0 20px;
     position: relative;
 }
 
 .filters {
     position: sticky;
+    height: fit-content;
     top: 20px;
-    width: 280px;
+    width: 400px;
     background: white;
     padding: 25px;
     border-radius: 12px;
@@ -40,7 +41,7 @@ body {
 }
 
 .filter-section h4 {
-    margin-bottom: 15px;
+    margin-bottom: 5px;
     font-size: 1.1rem;
     color: #333;
     font-weight: 600;
@@ -105,7 +106,7 @@ body {
 .ratings-filter {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 5px;
 }
 
 .ratings-filter label {
@@ -135,7 +136,7 @@ body {
     flex: 1;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 30px;
+    gap: 10px;
     margin-left: 0;
 }
 
@@ -409,4 +410,12 @@ input[type="range"]:hover {
 
 .products-header{
     margin-bottom: 10px;
+}
+
+.categories-list input:checked + label {
+    font-weight: bold;
+    color: #000;
+    background-color: #f0f0f0;
+    padding: 2px 8px;
+    border-radius: 4px;
 }

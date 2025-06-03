@@ -23,13 +23,13 @@
 
     <nav class="main-nav">
       <div class="logo">
-        <span>SHOP.CO</span>
+        <a  id="logo" href="Home.html">SHOP.CO</a>
       </div>
       <div class="nav-links">
       <span onclick="window.location.href='Shop.html'">Shop</span>
-        <span onclick="document.getElementById('OnSale').scrollIntoView({behavior: 'smooth'})">On Sale</span>
-        <span onclick="document.getElementById('NewArrivals').scrollIntoView({behavior: 'smooth'})">New Arrivals</span>
-        <span onclick="document.getElementById('Brands').scrollIntoView({behavior: 'smooth'})">Brands</span>
+        <span onclick="window.location.href='Home.html#OnSale'">On Sale</span>
+        <span onclick="window.location.href='Home.html#NewArrivals'">New Arrivals</span>
+        <span onclick="window.location.href='Home.html#Brands'">Brands</span>
       </div>
  
       
@@ -53,11 +53,18 @@
         <aside class="filters">
             <h3>Filters</h3>
             
-            <!-- Replace the existing categories-list div with this -->
+          
             <div class="filter-section">
                 <h4>Categories</h4>
                 <div class="categories-list">
-                    <!-- Categories will be populated dynamically -->
+                    <label><input type="checkbox" value="T-Shirts"> T-Shirts</label>
+                    <label><input type="checkbox" value="Outerwear"> Outerwear</label>
+                    <label><input type="checkbox" value="Pants"> Pants</label>
+                    <label><input type="checkbox" value="Accessories"> Accessories</label>
+                    <label><input type="checkbox" value="Sweaters"> Sweaters</label>
+                    <label><input type="checkbox" value="Shirts"> Shirts</label>
+                    <label><input type="checkbox" value="Blouses"> Blouses</label>
+                    <label><input type="checkbox" value="Activewear"> Activewear</label>
                 </div>
             </div>
 
@@ -72,7 +79,6 @@
                 </div>
             </div>
 
-            <!-- Add this after the Categories filter section -->
             <div class="filter-section">
                 <h4>Brands</h4>
                 <div class="brands-list">
@@ -97,6 +103,7 @@
             <div class="products-header">
                 <div class="sort-options">
                     <select id="sortSelect">
+                        <option value="">Default</option>
                         <option value="price-asc">Price: Low to High</option>
                         <option value="price-desc">Price: High to Low</option>
                         <option value="rating">Rating</option>

@@ -10,7 +10,6 @@ function setLoadingState(loading) {
     }
 }
 
-// Add this function after fetchProducts()
 function getUniqueCategories() {
     const categories = new Set();
     products.forEach(product => {
@@ -30,7 +29,6 @@ function populateCategories() {
     `).join('');
 }
 
-// Modify fetchProducts() to include category population
 function fetchProducts() {
     setLoadingState(true);
     const xhr = new XMLHttpRequest();
@@ -41,7 +39,6 @@ function fetchProducts() {
             products = JSON.parse(xhr.responseText);
             filteredProducts = [...products];
             
-            // Check for selected brand
             const selectedBrand = localStorage.getItem('selectedBrand');
             if (selectedBrand) {
                 const brandCheckbox = document.querySelector(`.brands-list input[value="${selectedBrand}"]`);
@@ -51,24 +48,28 @@ function fetchProducts() {
                 localStorage.removeItem('selectedBrand');
             }
 
-            // Check for selected category
             const selectedCategory = localStorage.getItem('selectedCategory');
             if (selectedCategory) {
-                const categoryCheckbox = document.querySelector(`.categories-list input[value="${selectedCategory}"]`);
-                if (categoryCheckbox) {
-                    categoryCheckbox.checked = true;
-                }
+                // First populate the categories
+                populateCategories();
+                
+                // Then find and check the checkbox
+                setTimeout(() => {
+                    const categoryCheckbox = document.querySelector(`.categories-list input[value="${selectedCategory}"]`);
+                    if (categoryCheckbox) {
+                        categoryCheckbox.checked = true;
+                        filteredProducts = products.filter(product => 
+                            product.Categories === selectedCategory
+                        );
+                        displayProducts();
+                    }
+                }, 0);
+                
                 localStorage.removeItem('selectedCategory');
+            } else {
+                populateCategories();
             }
 
-            // Populate categories
-            populateCategories();
-
-            // Apply filters if either brand or category is selected
-            if (selectedBrand || selectedCategory) {
-                applyFilters();
-            }
-            
             displayProducts();
             setupEventListeners();
             setLoadingState(false);
@@ -160,9 +161,10 @@ function setupEventListeners() {
     document.querySelectorAll('.brands-list input').forEach(checkbox => {
         checkbox.addEventListener('change', applyFilters);
     });
+
+    document.getElementById('sortSelect').addEventListener('change', applyFilters);
 }
 
-// Update the applyFilters function
 function applyFilters() {
     const selectedCategories = Array.from(document.querySelectorAll('.categories-list input:checked'))
         .map(checkbox => checkbox.value);
@@ -213,16 +215,13 @@ function addToCart(productId) {
     const product = products.find(p => p.ID === productId);
     if (!product) return;
 
-    // Get the user's cart from localStorage
     let userCarts = JSON.parse(localStorage.getItem('userCarts')) || {};
     if (!userCarts[loggedInUser]) {
         userCarts[loggedInUser] = [];
     }
 
-    // Check if product is already in cart
     const existingItem = userCarts[loggedInUser].find(item => item.ID === productId);
     if (existingItem) {
-        // Validate stock
         if (existingItem.quantity + 1 <= product.UnitsInStock) {
             existingItem.quantity += 1;
         } else {
@@ -230,7 +229,6 @@ function addToCart(productId) {
             return;
         }
     } else {
-        // Add new item with quantity 1
         if (product.UnitsInStock > 0) {
             userCarts[loggedInUser].push({ ...product, quantity: 1 });
         } else {
@@ -239,13 +237,10 @@ function addToCart(productId) {
         }
     }
 
-    // Save updated cart to localStorage
     localStorage.setItem('userCarts', JSON.stringify(userCarts));
 
-    // Update cart count immediately
     updateCartCount();
 
-    // Visual feedback on button
     const button = event.currentTarget;
     button.innerHTML = '<i class="fas fa-check"></i> Added!';
     button.style.background = '#4CAF50';
